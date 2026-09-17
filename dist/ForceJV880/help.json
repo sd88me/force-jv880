@@ -1,0 +1,261 @@
+{
+  "title": "Mini-JV",
+  "children": [
+    {
+      "title": "Overview",
+      "lines": [
+        "Roland JV-880 PCM",
+        "synthesizer emulator.",
+        "",
+        "28-voice polyphony.",
+        "192 factory patches",
+        "(Preset A, B, and",
+        "Internal banks).",
+        "",
+        "Two modes:",
+        " Patch: single sound",
+        "  with 4-tone edit",
+        " Performance: 8 parts",
+        "  on channels 1-8",
+        "",
+        "Supports SR-JV80",
+        "expansion ROMs."
+      ]
+    },
+    {
+      "title": "Setup",
+      "children": [
+        {
+          "title": "ROM Files",
+          "lines": [
+            "Requires JV-880",
+            "v1.0.0 ROM files in",
+            "the roms/ folder:",
+            "",
+            " jv880_rom1.bin",
+            " jv880_rom2.bin",
+            " jv880_waverom1.bin",
+            " jv880_waverom2.bin",
+            "",
+            "Upload via the ME",
+            "Installer's asset",
+            "copy feature.",
+            "",
+            "v1.0.1 ROMs do NOT",
+            "work (CPU traps)."
+          ]
+        },
+        {
+          "title": "Expansion ROMs",
+          "lines": [
+            "Optional SR-JV80",
+            "expansion cards.",
+            "",
+            "Place .bin files in",
+            "roms/expansions/",
+            "",
+            "Files must have",
+            "\"SR-JV80\" in the",
+            "filename.",
+            "",
+            "Auto-unscrambled on",
+            "first load. Patches",
+            "appear after the",
+            "192 factory sounds.",
+            "",
+            "Up to 32 expansions."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch Mode",
+      "children": [
+        {
+          "title": "Navigation",
+          "lines": [
+            "Jog: browse patches",
+            "L/R: prev/next",
+            "Shift+L/R: next bank",
+            "",
+            "Banks:",
+            " Preset A (0-63)",
+            " Preset B (64-127)",
+            " Internal (128-191)",
+            " Expansions (192+)"
+          ]
+        },
+        {
+          "title": "Knobs (Patch)",
+          "lines": [
+            "In the shadow UI the",
+            "8 knobs are:",
+            "",
+            "1 Cutoff",
+            "2 Resonance",
+            "3 Attack",
+            "4 Decay",
+            "5 Sustain",
+            "6 Release",
+            "7 Filter Env",
+            "8 LFO Depth",
+            "",
+            "These are macros: one",
+            "knob moves the same",
+            "parameter on every",
+            "tone at once.",
+            "",
+            "OVERLAY KNOBS ARE",
+            "NOT THE SAME EIGHT.",
+            "With the shadow UI",
+            "hidden you get:",
+            "",
+            "1 Cutoff",
+            "2 Resonance",
+            "3 Attack",
+            "4 Decay",
+            "5 Release",
+            "6 Filter Env",
+            "7 Reverb",
+            "8 Chorus",
+            "",
+            "Sustain and LFO",
+            "Depth are not on the",
+            "overlay; Reverb and",
+            "Chorus are not on",
+            "the grid.",
+            "",
+            "Patch Level and Pan",
+            "live under Common /",
+            "Control."
+          ]
+        },
+        {
+          "title": "Tone Editing",
+          "lines": [
+            "Each patch has 4",
+            "tones (layers).",
+            "",
+            "Track 1-4 buttons:",
+            " Select tone 1-4",
+            "",
+            "Shift+Track:",
+            " Mute/unmute tone",
+            "",
+            "Knob edits apply to",
+            "the selected tone.",
+            "",
+            "Each tone has its",
+            "own filter, amp",
+            "envelope, LFO, and",
+            "wave settings."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Performance Mode",
+      "children": [
+        {
+          "title": "Navigation",
+          "lines": [
+            "48 performances",
+            "(3 banks x 16).",
+            "",
+            "Jog: browse",
+            "Step 1-8: select",
+            " part 1-8",
+            "Shift+Step:",
+            " mute/unmute part"
+          ]
+        },
+        {
+          "title": "Knobs (Perf)",
+          "lines": [
+            "Performance mode",
+            "edits one PART at a",
+            "time.",
+            "Open Parts and pick",
+            "the part first.",
+            "",
+            "1 Level",
+            "2 Pan",
+            "3 Reverb",
+            "4 Chorus",
+            "5 Coarse Tune",
+            "  transpose, semis",
+            "6 Fine Tune",
+            "  detune, cents",
+            "7 Key Lo",
+            "8 Key Hi",
+            "  the key range",
+            "",
+            "The overlay knobs are",
+            "the same eight in",
+            "performance mode.",
+            "",
+            "Vel Sense and Vel Max",
+            "are NOT knobs. They",
+            "are on the Parts",
+            "page below the eight,",
+            "along with Part",
+            "Switch, Bank, Patch",
+            "and Key Transpose."
+          ]
+        },
+        {
+          "title": "In a Chain Slot",
+          "lines": [
+            "Picking Performance",
+            "on the Mode page",
+            "swaps the pages for",
+            "the performance set:",
+            "",
+            "Presets: the 48",
+            " performances",
+            "Common / Effects:",
+            " key mode + the",
+            " PERFORMANCE reverb",
+            " and chorus (not",
+            " the patch's)",
+            "Edit Parts: pick a",
+            " part, then level,",
+            " pan, tune, key",
+            " range, velocity,",
+            " its patch, and",
+            " Part On",
+            "Save to Slot: write",
+            " to one of the 16",
+            " Internal slots",
+            "Load Expansion",
+            "",
+            "Patch pages (tones,",
+            "macros) are hidden",
+            "here - they edit a",
+            "patch, and a",
+            "performance plays",
+            "eight of them."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "MIDI",
+      "lines": [
+        "28-voice polyphony.",
+        "",
+        "Patch Mode:",
+        " All 16 channels",
+        "",
+        "Performance Mode:",
+        " Parts on ch 1-8",
+        "",
+        "Octave Transpose:",
+        " -4 to +4 via menu",
+        "",
+        "Supports velocity,",
+        "pitch bend, and CCs."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1730 @@
+{
+    "data": {
+        "version": 3,
+        "name": "Harpie 4T Control",
+        "volume": 0.921875,
+        "volumeKnown": true,
+        "pan": 0.4921875,
+        "panKnown": true,
+        "mute": false,
+        "solo": false,
+        "cvPort": 0,
+        "gatePort": 1,
+        "length": 9223372036854775807,
+        "velocityScale": 1.0,
+        "muteGroup": 0,
+        "transposition": 0,
+        "colour": 8959,
+        "padsFollowTrackColour": true,
+        "skipFromRowLaunch": false,
+        "samples": [],
+        "program": {
+            "version": 1,
+            "name": "Harpie 4T Control",
+            "type": 4,
+            "programPads": {
+                "Universal": {
+                    "value0": true
+                },
+                "Type": {
+                    "value0": 5
+                },
+                "universalPad": 8959,
+                "pads": {
+                    "value0": 0,
+                    "value1": 0,
+                    "value2": 0,
+                    "value3": 0,
+                    "value4": 0,
+                    "value5": 0,
+                    "value6": 0,
+                    "value7": 0,
+                    "value8": 0,
+                    "value9": 0,
+                    "value10": 0,
+                    "value11": 0,
+                    "value12": 0,
+                    "value13": 0,
+                    "value14": 0,
+                    "value15": 0,
+                    "value16": 0,
+                    "value17": 0,
+                    "value18": 0,
+                    "value19": 0,
+                    "value20": 0,
+                    "value21": 0,
+                    "value22": 0,
+                    "value23": 0,
+                    "value24": 0,
+                    "value25": 0,
+                    "value26": 0,
+                    "value27": 0,
+                    "value28": 0,
+                    "value29": 0,
+                    "value30": 0,
+                    "value31": 0,
+                    "value32": 0,
+                    "value33": 0,
+                    "value34": 0,
+                    "value35": 0,
+                    "value36": 0,
+                    "value37": 0,
+                    "value38": 0,
+                    "value39": 0,
+                    "value40": 0,
+                    "value41": 0,
+                    "value42": 0,
+                    "value43": 0,
+                    "value44": 0,
+                    "value45": 0,
+                    "value46": 0,
+                    "value47": 0,
+                    "value48": 0,
+                    "value49": 0,
+                    "value50": 0,
+                    "value51": 0,
+                    "value52": 0,
+                    "value53": 0,
+                    "value54": 0,
+                    "value55": 0,
+                    "value56": 0,
+                    "value57": 0,
+                    "value58": 0,
+                    "value59": 0,
+                    "value60": 0,
+                    "value61": 0,
+                    "value62": 0,
+                    "value63": 0,
+                    "value64": 0,
+                    "value65": 0,
+                    "value66": 0,
+                    "value67": 0,
+                    "value68": 0,
+                    "value69": 0,
+                    "value70": 0,
+                    "value71": 0,
+                    "value72": 0,
+                    "value73": 0,
+                    "value74": 0,
+                    "value75": 0,
+                    "value76": 0,
+                    "value77": 0,
+                    "value78": 0,
+                    "value79": 0,
+                    "value80": 0,
+                    "value81": 0,
+                    "value82": 0,
+                    "value83": 0,
+                    "value84": 0,
+                    "value85": 0,
+                    "value86": 0,
+                    "value87": 0,
+                    "value88": 0,
+                    "value89": 0,
+                    "value90": 0,
+                    "value91": 0,
+                    "value92": 0,
+                    "value93": 0,
+                    "value94": 0,
+                    "value95": 0,
+                    "value96": 0,
+                    "value97": 0,
+                    "value98": 0,
+                    "value99": 0,
+                    "value100": 0,
+                    "value101": 0,
+                    "value102": 0,
+                    "value103": 0,
+                    "value104": 0,
+                    "value105": 0,
+                    "value106": 0,
+                    "value107": 0,
+                    "value108": 0,
+                    "value109": 0,
+                    "value110": 0,
+                    "value111": 0,
+                    "value112": 0,
+                    "value113": 0,
+                    "value114": 0,
+                    "value115": 0,
+                    "value116": 0,
+                    "value117": 0,
+                    "value118": 0,
+                    "value119": 0,
+                    "value120": 0,
+                    "value121": 0,
+                    "value122": 0,
+                    "value123": 0,
+                    "value124": 0,
+                    "value125": 0,
+                    "value126": 0,
+                    "value127": 0
+                },
+                "UnusedPads": {
+                    "value0": 1
+                }
+            },
+            "customQLinks": [
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 20,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 0.46020418405532839,
+                                "stride": 0.0,
+                                "deadspot": 0.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 21,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 0.09000000357627869,
+                                "stride": 0.0,
+                                "deadspot": 0.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 23,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 0.06000000610947609,
+                                "stride": 0.0,
+                                "deadspot": 0.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 25,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 0.5009998083114624,
+                                "stride": 0.0,
+                                "deadspot": 0.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 26,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 0.7900002002716065,
+                                "stride": 0.0,
+                                "deadspot": 0.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 27,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 0.7900002002716065,
+                                "stride": 0.0,
+                                "deadspot": 0.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 28,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 60,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 0.5070002675056458,
+                                "stride": 0.0,
+                                "deadspot": 0.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 11,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.010000000707805157,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 0.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 1
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 22,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 0.06000000610947609,
+                                "stride": 0.0,
+                                "deadspot": 0.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 29,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.08000000566244126,
+                                "max": 0.7889997959136963,
+                                "stride": 0.0,
+                                "deadspot": 0.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 1.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 75,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "1 DIV 0-10",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 24,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 0.08000000566244126,
+                                "stride": 0.0,
+                                "deadspot": 0.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "1 Auto Regen Cycles",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 65,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 0.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 0
+                        }
+                    ],
+                    "momentary": 0,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 110,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 0,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 1
+                        }
+                    ],
+                    "momentary": 1,
+                    "controlValue": 0.0
+                },
+                {
+                    "name": "",
+                    "controlType": 0,
+                    "targetData": [
+                        {
+                            "version": 1,
+                            "parameter": 71,
+                            "track": "RiffMaker 4T",
+                            "insertParamIndex": {
+                                "initialized": false
+                            },
+                            "instrumentIndex": 257,
+                            "paramType": 1,
+                            "controlInputRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "parameterRange": {
+                                "min": 0.0,
+                                "max": 1.0,
+                                "stride": 0.0,
+                                "deadspot": 2.0,
+                                "skew": 1.0
+                            },
+                            "behaviour": 1
+                        }
+                    ],
+                    "momentary": 1,
+                    "controlValue": 0.0
+                }
+            ],
+            "transpose": 0,
+            "midiKillGroup": -1,
+            "chainID": 0,
+            "midiEventsFilter": {
+                "channelFilterData": {
+                    "channel": 255
+                },
+                "velocityFilterData": {
+                    "min": 0.0,
+                    "max": 1.0
+                },
+                "noteFilterData": {
+                    "noteRange": {
+                        "type": 2,
+                        "data": "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+                    }
+                },
+                "automationFilterData": {
+                    "filteredParams": "00000000000000000"
+                }
+            },
+            "mixable": {
+                "version": 1,
+                "audioRoute": {
+                    "destination": 2,
+                    "audioRouteSubIndex": 0,
+                    "channelBitmap": {
+                        "type": 0,
+                        "data": 3
+                    }
+                },
+                "volume": 0.7079457640647888,
+                "mute": false,
+                "solo": false,
+                "pan": 0.5,
+                "automationFilter": 1,
+                "sends": [],
+                "inserts": {
+                    "insertsEnabled": true,
+                    "effects": []
+                }
+            },
+            "customisable": {
+                "mapping": [
+                    {
+                        "parameterIndex": "0 0 0",
+                        "automationIndex": 20,
+                        "value": 0.0,
+                        "name": "1 Mode 0-25 (1 Cluster 0-59)"
+                    },
+                    {
+                        "parameterIndex": "0 0 1",
+                        "automationIndex": 21,
+                        "value": 0.0,
+                        "name": "1 Spread 0-1 (1 KEY 0-11)"
+                    },
+                    {
+                        "parameterIndex": "0 0 2",
+                        "automationIndex": 22,
+                        "value": 0.0,
+                        "name": "1 OCT Range 0-8 (1 OCT LO 0-8)"
+                    },
+                    {
+                        "parameterIndex": "0 0 3",
+                        "automationIndex": 23,
+                        "value": 0.0,
+                        "name": "1 Offset 0-6 (1 OCT HI 0-8)"
+                    },
+                    {
+                        "parameterIndex": "0 0 4",
+                        "automationIndex": 24,
+                        "value": 0.007874015718698502,
+                        "name": "1 DIV 0-10"
+                    },
+                    {
+                        "parameterIndex": "0 0 5",
+                        "automationIndex": 25,
+                        "value": 0.12598425149917603,
+                        "name": "1 Length 0-64 (1 Length 3-64)"
+                    },
+                    {
+                        "parameterIndex": "0 0 6",
+                        "automationIndex": 26,
+                        "value": 0.31496062874794009,
+                        "name": "1 Accent Prob 0-100"
+                    },
+                    {
+                        "parameterIndex": "0 0 7",
+                        "automationIndex": 27,
+                        "value": 0.15748031437397004,
+                        "name": "1 Slide Prob 0-100"
+                    },
+                    {
+                        "parameterIndex": "0 0 8",
+                        "automationIndex": 28,
+                        "value": 0.0,
+                        "name": "1 Rhythm (1 Fill Mode 0-3)"
+                    },
+                    {
+                        "parameterIndex": "0 0 9",
+                        "automationIndex": 29,
+                        "value": 0.5118110179901123,
+                        "name": "1 GATE 25-100"
+                    },
+                    {
+                        "parameterIndex": "0 0 10",
+                        "automationIndex": 75,
+                        "value": 0.0,
+                        "name": "1 Velocity"
+                    },
+                    {
+                        "parameterIndex": "0 0 11",
+                        "automationIndex": 60,
+                        "value": 0.0,
+                        "name": "1 Rotate 0-64"
+                    },
+                    {
+                        "parameterIndex": "0 0 12",
+                        "automationIndex": 11,
+                        "value": 1.0,
+                        "name": "1 ON 0-1"
+                    },
+                    {
+                        "parameterIndex": "0 0 13",
+                        "automationIndex": 15,
+                        "value": 0.007874015718698502,
+                        "name": "1 Ch 1-16"
+                    },
+                    {
+                        "parameterIndex": "0 0 14",
+                        "automationIndex": 91,
+                        "value": 0.0,
+                        "name": "1:VariCycl 0-64 (Send 1)"
+                    },
+                    {
+                        "parameterIndex": "0 0 15",
+                        "automationIndex": 71,
+                        "value": 0.0,
+                        "name": "1 Generate (1 Randomize)"
+                    },
+                    {
+                        "parameterIndex": "1 0 0",
+                        "automationIndex": 30,
+                        "value": 0.0,
+                        "name": "2 Mode 0-25 (2 Cluster 0-59)"
+                    },
+                    {
+                        "parameterIndex": "1 0 1",
+                        "automationIndex": 31,
+                        "value": 0.0,
+                        "name": "2 Spread 0-1 (2 KEY 0-11)"
+                    },
+                    {
+                        "parameterIndex": "1 0 2",
+                        "automationIndex": 32,
+                        "value": 0.0,
+                        "name": "2 OCT Range 0-8 (2 OCT LO 0-8)"
+                    },
+                    {
+                        "parameterIndex": "1 0 3",
+                        "automationIndex": 33,
+                        "value": 0.0,
+                        "name": "2 Offset 0-6 (2 OCT HI 0-8)"
+                    },
+                    {
+                        "parameterIndex": "1 0 4",
+                        "automationIndex": 34,
+                        "value": 0.007874015718698502,
+                        "name": "2 DIV 0-10"
+                    },
+                    {
+                        "parameterIndex": "1 0 5",
+                        "automationIndex": 35,
+                        "value": 0.12598425149917603,
+                        "name": "2 Length 0-64 (2 Length 3-64)"
+                    },
+                    {
+                        "parameterIndex": "1 0 6",
+                        "automationIndex": 36,
+                        "value": 0.31496062874794009,
+                        "name": "2 Accent Prob 0-100"
+                    },
+                    {
+                        "parameterIndex": "1 0 7",
+                        "automationIndex": 37,
+                        "value": 0.15748031437397004,
+                        "name": "2 Slide Prob 0-100"
+                    },
+                    {
+                        "parameterIndex": "1 0 8",
+                        "automationIndex": 38,
+                        "value": 0.0,
+                        "name": "2 Rhythm (2 Fill Mode 0-3)"
+                    },
+                    {
+                        "parameterIndex": "1 0 9",
+                        "automationIndex": 39,
+                        "value": 0.5118110179901123,
+                        "name": "2 GATE 25-100"
+                    },
+                    {
+                        "parameterIndex": "1 0 10",
+                        "automationIndex": 76,
+                        "value": 0.0,
+                        "name": "2 Velocity"
+                    },
+                    {
+                        "parameterIndex": "1 0 11",
+                        "automationIndex": 61,
+                        "value": 0.0,
+                        "name": "2 Rotate 0-64"
+                    },
+                    {
+                        "parameterIndex": "1 0 12",
+                        "automationIndex": 12,
+                        "value": 0.0,
+                        "name": "2 ON 0-1"
+                    },
+                    {
+                        "parameterIndex": "1 0 13",
+                        "automationIndex": 16,
+                        "value": 0.015748031437397004,
+                        "name": "2 Ch 1-16"
+                    },
+                    {
+                        "parameterIndex": "1 0 14",
+                        "automationIndex": 92,
+                        "value": 0.0,
+                        "name": "2:VariCycl 0-64 (Send 2)"
+                    },
+                    {
+                        "parameterIndex": "1 0 15",
+                        "automationIndex": 72,
+                        "value": 0.0,
+                        "name": "2 Generate (2 Randomize)"
+                    },
+                    {
+                        "parameterIndex": "2 0 0",
+                        "automationIndex": 40,
+                        "value": 0.0,
+                        "name": "3 Mode 0-25 (3 Cluster 0-59)"
+                    },
+                    {
+                        "parameterIndex": "2 0 1",
+                        "automationIndex": 41,
+                        "value": 0.0,
+                        "name": "3 Spread 0-1 (3 KEY 0-11)"
+                    },
+                    {
+                        "parameterIndex": "2 0 2",
+                        "automationIndex": 42,
+                        "value": 0.0,
+                        "name": "3 OCT Range 0-8 (3 OCT LO 0-8)"
+                    },
+                    {
+                        "parameterIndex": "2 0 3",
+                        "automationIndex": 43,
+                        "value": 0.0,
+                        "name": "3 Offset 0-6 (3 OCT HI 0-8)"
+                    },
+                    {
+                        "parameterIndex": "2 0 4",
+                        "automationIndex": 44,
+                        "value": 0.007874015718698502,
+                        "name": "3 DIV 0-10"
+                    },
+                    {
+                        "parameterIndex": "2 0 5",
+                        "automationIndex": 45,
+                        "value": 0.12598425149917603,
+                        "name": "3 Length 0-64 (3 Length 3-64)"
+                    },
+                    {
+                        "parameterIndex": "2 0 6",
+                        "automationIndex": 46,
+                        "value": 0.31496062874794009,
+                        "name": "3 Accent Prob 0-100"
+                    },
+                    {
+                        "parameterIndex": "2 0 7",
+                        "automationIndex": 47,
+                        "value": 0.15748031437397004,
+                        "name": "3 Slide Prob 0-100"
+                    },
+                    {
+                        "parameterIndex": "2 0 8",
+                        "automationIndex": 48,
+                        "value": 0.0,
+                        "name": "3 Rhythm (3 Fill Mode 0-3)"
+                    },
+                    {
+                        "parameterIndex": "2 0 9",
+                        "automationIndex": 49,
+                        "value": 0.5118110179901123,
+                        "name": "3 GATE 25-100"
+                    },
+                    {
+                        "parameterIndex": "2 0 10",
+                        "automationIndex": 77,
+                        "value": 0.0,
+                        "name": "3 Velocity"
+                    },
+                    {
+                        "parameterIndex": "2 0 11",
+                        "automationIndex": 62,
+                        "value": 0.0,
+                        "name": "3 Rotate 0-64"
+                    },
+                    {
+                        "parameterIndex": "2 0 12",
+                        "automationIndex": 13,
+                        "value": 0.0,
+                        "name": "3 ON 0-1"
+                    },
+                    {
+                        "parameterIndex": "2 0 13",
+                        "automationIndex": 17,
+                        "value": 0.023622047156095506,
+                        "name": "3 Ch 1-16"
+                    },
+                    {
+                        "parameterIndex": "2 0 14",
+                        "automationIndex": 93,
+                        "value": 0.0,
+                        "name": "3:VariCycl 0-64 (Send 3)"
+                    },
+                    {
+                        "parameterIndex": "2 0 15",
+                        "automationIndex": 73,
+                        "value": 0.0,
+                        "name": "3 Generate (3 Randomize)"
+                    },
+                    {
+                        "parameterIndex": "3 0 0",
+                        "automationIndex": 50,
+                        "value": 0.0,
+                        "name": "4 Mode 0-25 (4 Cluster 0-59)"
+                    },
+                    {
+                        "parameterIndex": "3 0 1",
+                        "automationIndex": 51,
+                        "value": 0.0,
+                        "name": "4 Spead  0-1 (4 KEY 0-11)"
+                    },
+                    {
+                        "parameterIndex": "3 0 2",
+                        "automationIndex": 52,
+                        "value": 0.0,
+                        "name": "4 OCT Range 0-8 (4 OCT LO 0-8)"
+                    },
+                    {
+                        "parameterIndex": "3 0 3",
+                        "automationIndex": 53,
+                        "value": 0.0,
+                        "name": "4 Offset 0-6 (4 OCT HI 0-8)"
+                    },
+                    {
+                        "parameterIndex": "3 0 4",
+                        "automationIndex": 54,
+                        "value": 0.007874015718698502,
+                        "name": "4 DIV 0-10"
+                    },
+                    {
+                        "parameterIndex": "3 0 5",
+                        "automationIndex": 55,
+                        "value": 0.12598425149917603,
+                        "name": "4 Length 0-64 (4 Length 3-64)"
+                    },
+                    {
+                        "parameterIndex": "3 0 6",
+                        "automationIndex": 56,
+                        "value": 0.31496062874794009,
+                        "name": "4 Accent Prob 0-100"
+                    },
+                    {
+                        "parameterIndex": "3 0 7",
+                        "automationIndex": 57,
+                        "value": 0.15748031437397004,
+                        "name": "4 Slide Prob 0-100"
+                    },
+                    {
+                        "parameterIndex": "3 0 8",
+                        "automationIndex": 58,
+                        "value": 0.0,
+                        "name": "4 Rhythm (4 Fill Mode 0-3)"
+                    },
+                    {
+                        "parameterIndex": "3 0 9",
+                        "automationIndex": 59,
+                        "value": 0.5118110179901123,
+                        "name": "4 GATE 25-100"
+                    },
+                    {
+                        "parameterIndex": "3 0 10",
+                        "automationIndex": 78,
+                        "value": 0.0,
+                        "name": "4 Velocity"
+                    },
+                    {
+                        "parameterIndex": "3 0 11",
+                        "automationIndex": 63,
+                        "value": 0.0,
+                        "name": "4 Rotate 0-64"
+                    },
+                    {
+                        "parameterIndex": "3 0 12",
+                        "automationIndex": 14,
+                        "value": 0.0,
+                        "name": "4 ON 0-1"
+                    },
+                    {
+                        "parameterIndex": "3 0 13",
+                        "automationIndex": 18,
+                        "value": 0.031496062874794009,
+                        "name": "4 Ch 1-16"
+                    },
+                    {
+                        "parameterIndex": "3 0 14",
+                        "automationIndex": 94,
+                        "value": 0.0,
+                        "name": "4:VariCycl 0-64 (Send 4)"
+                    },
+                    {
+                        "parameterIndex": "3 0 15",
+                        "automationIndex": 74,
+                        "value": 0.0,
+                        "name": "4 Generate (4 Randomize)"
+                    },
+                    {
+                        "parameterIndex": "4 0 0",
+                        "automationIndex": 3,
+                        "value": 0.9448819160461426,
+                        "name": "BPM1 30-127"
+                    },
+                    {
+                        "parameterIndex": "4 0 1",
+                        "automationIndex": 4,
+                        "value": 0.0,
+                        "name": "BPM2 0-127"
+                    },
+                    {
+                        "parameterIndex": "4 0 2",
+                        "automationIndex": 100,
+                        "value": 0.007874015718698502,
+                        "name": "EXTSYNC 0-1"
+                    },
+                    {
+                        "parameterIndex": "4 0 3",
+                        "automationIndex": 90,
+                        "value": 0.787401556968689,
+                        "name": "VariCyclProb: 0-100 (CC 90)"
+                    },
+                    {
+                        "parameterIndex": "4 0 4",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "4 0 5",
+                        "automationIndex": 97,
+                        "value": 0.007874015718698502,
+                        "name": "Sync on-off 0-1 (Data Decrement)"
+                    },
+                    {
+                        "parameterIndex": "4 0 6",
+                        "automationIndex": 81,
+                        "value": 0.0,
+                        "name": "FULL TIE 0-1 (Gen Purpose 6)"
+                    },
+                    {
+                        "parameterIndex": "4 0 7",
+                        "automationIndex": 80,
+                        "value": 0.0,
+                        "name": "CLOCK START 0-1"
+                    },
+                    {
+                        "parameterIndex": "4 0 8",
+                        "automationIndex": 82,
+                        "value": 0.5511810779571533,
+                        "name": "Latency Comp (Gen Purpose 7)"
+                    },
+                    {
+                        "parameterIndex": "4 0 9",
+                        "automationIndex": 109,
+                        "value": 0.0,
+                        "name": "Update at Beat 0-1 (CC 109)"
+                    },
+                    {
+                        "parameterIndex": "4 0 10",
+                        "automationIndex": 110,
+                        "value": 0.023622047156095506,
+                        "name": "ReSyn 1,3,5,7... (CC 110)"
+                    },
+                    {
+                        "parameterIndex": "4 0 11",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "4 0 12",
+                        "automationIndex": 83,
+                        "value": 0.0,
+                        "name": "Slot (Gen Purpose 8)"
+                    },
+                    {
+                        "parameterIndex": "4 0 13",
+                        "automationIndex": 84,
+                        "value": 1.0,
+                        "name": "Load Slot (Pmento Control)"
+                    },
+                    {
+                        "parameterIndex": "4 0 14",
+                        "automationIndex": 85,
+                        "value": 1.0,
+                        "name": "Save Slot (CC 85)"
+                    },
+                    {
+                        "parameterIndex": "4 0 15",
+                        "automationIndex": 8,
+                        "value": 0.007874015718698502,
+                        "name": "Arp Hold 0-1 (Balance)"
+                    },
+                    {
+                        "parameterIndex": "5 0 0",
+                        "automationIndex": 101,
+                        "value": 0.0,
+                        "name": "1 Reset on Input 0-1 (RPN MSB)"
+                    },
+                    {
+                        "parameterIndex": "5 0 1",
+                        "automationIndex": 102,
+                        "value": 0.0,
+                        "name": "2 Reset On Input (CC 102)"
+                    },
+                    {
+                        "parameterIndex": "5 0 2",
+                        "automationIndex": 103,
+                        "value": 0.0,
+                        "name": "3 Reset On Input 0-1 (CC 103)"
+                    },
+                    {
+                        "parameterIndex": "5 0 3",
+                        "automationIndex": 104,
+                        "value": 0.0,
+                        "name": "4 Reset on Input (CC 104)"
+                    },
+                    {
+                        "parameterIndex": "5 0 4",
+                        "automationIndex": 65,
+                        "value": 0.15748031437397004,
+                        "name": "1 Ratchet Prob 0-100% (Pmento On/Off)"
+                    },
+                    {
+                        "parameterIndex": "5 0 5",
+                        "automationIndex": 66,
+                        "value": 0.15748031437397004,
+                        "name": "2 Ratch Prob 0-100% (Sost On/Off)"
+                    },
+                    {
+                        "parameterIndex": "5 0 6",
+                        "automationIndex": 67,
+                        "value": 0.15748031437397004,
+                        "name": "3 Ratchet Prob0-100% (Soft Ped On/Off)"
+                    },
+                    {
+                        "parameterIndex": "5 0 7",
+                        "automationIndex": 68,
+                        "value": 0.15748031437397004,
+                        "name": "4 Ratchet Prob% (Legato Switch)"
+                    },
+                    {
+                        "parameterIndex": "5 0 8",
+                        "automationIndex": 105,
+                        "value": 0.0,
+                        "name": "1 Ratchet Div: 2-8 (CC 105)"
+                    },
+                    {
+                        "parameterIndex": "5 0 9",
+                        "automationIndex": 106,
+                        "value": 0.0,
+                        "name": "2 Ratchet Div 2-8 (CC 106)"
+                    },
+                    {
+                        "parameterIndex": "5 0 10",
+                        "automationIndex": 107,
+                        "value": 0.0,
+                        "name": "3 Ratchet Div 2-8 (CC 107)"
+                    },
+                    {
+                        "parameterIndex": "5 0 11",
+                        "automationIndex": 108,
+                        "value": 0.0,
+                        "name": "4 Ratchet Div 2-8 (CC 108)"
+                    },
+                    {
+                        "parameterIndex": "5 0 12",
+                        "automationIndex": 99,
+                        "value": 0.3937007784843445,
+                        "name": "Ratchet Play 0-100% (NRPN MSB)"
+                    },
+                    {
+                        "parameterIndex": "5 0 13",
+                        "automationIndex": 98,
+                        "value": 0.0,
+                        "name": "RandRatDivs 0-1 (NRPN LSB)"
+                    },
+                    {
+                        "parameterIndex": "5 0 14",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "5 0 15",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "6 0 0",
+                        "automationIndex": 86,
+                        "value": 0.0,
+                        "name": "1 Rand Rotate (CC 86)"
+                    },
+                    {
+                        "parameterIndex": "6 0 1",
+                        "automationIndex": 87,
+                        "value": 0.0,
+                        "name": "2 Rand Rotate (CC 87)"
+                    },
+                    {
+                        "parameterIndex": "6 0 2",
+                        "automationIndex": 88,
+                        "value": 0.0,
+                        "name": "3 Rand Rotate (Hi Res Velocity)"
+                    },
+                    {
+                        "parameterIndex": "6 0 3",
+                        "automationIndex": 89,
+                        "value": 0.0,
+                        "name": "4 Rand Rotate (CC 89)"
+                    },
+                    {
+                        "parameterIndex": "6 0 4",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "6 0 5",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "6 0 6",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "6 0 7",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "6 0 8",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "6 0 9",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "6 0 10",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "6 0 11",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "6 0 12",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "6 0 13",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "6 0 14",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "6 0 15",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 0",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 1",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 2",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 3",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 4",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 5",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 6",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 7",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 8",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 9",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 10",
+                        "automationIndex": 123,
+                        "value": 0.0,
+                        "name": "All Notes Off"
+                    },
+                    {
+                        "parameterIndex": "7 0 11",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 12",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 13",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    },
+                    {
+                        "parameterIndex": "7 0 14",
+                        "automationIndex": 2147483647,
+                        "value": 0.0,
+                        "name": ""
+                    }
+                ]
+            },
+            "renderable": {
+                "sendToCueBus": false
+            },
+            "padNoteMap": {
+                "noteForPad": {
+                    "value0": 0,
+                    "value1": 1,
+                    "value2": 2,
+                    "value3": 3,
+                    "value4": 4,
+                    "value5": 5,
+                    "value6": 6,
+                    "value7": 7,
+                    "value8": 8,
+                    "value9": 9,
+                    "value10": 10,
+                    "value11": 11,
+                    "value12": 12,
+                    "value13": 13,
+                    "value14": 14,
+                    "value15": 15,
+                    "value16": 16,
+                    "value17": 17,
+                    "value18": 18,
+                    "value19": 19,
+                    "value20": 20,
+                    "value21": 21,
+                    "value22": 22,
+                    "value23": 23,
+                    "value24": 24,
+                    "value25": 25,
+                    "value26": 26,
+                    "value27": 27,
+                    "value28": 28,
+                    "value29": 29,
+                    "value30": 30,
+                    "value31": 31,
+                    "value32": 32,
+                    "value33": 33,
+                    "value34": 34,
+                    "value35": 35,
+                    "value36": 36,
+                    "value37": 37,
+                    "value38": 38,
+                    "value39": 39,
+                    "value40": 40,
+                    "value41": 41,
+                    "value42": 42,
+                    "value43": 43,
+                    "value44": 44,
+                    "value45": 45,
+                    "value46": 46,
+                    "value47": 47,
+                    "value48": 48,
+                    "value49": 49,
+                    "value50": 50,
+                    "value51": 51,
+                    "value52": 52,
+                    "value53": 53,
+                    "value54": 54,
+                    "value55": 55,
+                    "value56": 56,
+                    "value57": 57,
+                    "value58": 58,
+                    "value59": 59,
+                    "value60": 60,
+                    "value61": 61,
+                    "value62": 62,
+                    "value63": 63,
+                    "value64": 64,
+                    "value65": 65,
+                    "value66": 66,
+                    "value67": 67,
+                    "value68": 68,
+                    "value69": 69,
+                    "value70": 70,
+                    "value71": 71,
+                    "value72": 72,
+                    "value73": 73,
+                    "value74": 74,
+                    "value75": 75,
+                    "value76": 76,
+                    "value77": 77,
+                    "value78": 78,
+                    "value79": 79,
+                    "value80": 80,
+                    "value81": 81,
+                    "value82": 82,
+                    "value83": 83,
+                    "value84": 84,
+                    "value85": 85,
+                    "value86": 86,
+                    "value87": 87,
+                    "value88": 88,
+                    "value89": 89,
+                    "value90": 90,
+                    "value91": 91,
+                    "value92": 92,
+                    "value93": 93,
+                    "value94": 94,
+                    "value95": 95,
+                    "value96": 96,
+                    "value97": 97,
+                    "value98": 98,
+                    "value99": 99,
+                    "value100": 100,
+                    "value101": 101,
+                    "value102": 102,
+                    "value103": 103,
+                    "value104": 104,
+                    "value105": 105,
+                    "value106": 106,
+                    "value107": 107,
+                    "value108": 108,
+                    "value109": 109,
+                    "value110": 110,
+                    "value111": 111,
+                    "value112": 112,
+                    "value113": 113,
+                    "value114": 114,
+                    "value115": 115,
+                    "value116": 116,
+                    "value117": 117,
+                    "value118": 118,
+                    "value119": 119,
+                    "value120": 120,
+                    "value121": 121,
+                    "value122": 122,
+                    "value123": 123,
+                    "value124": 124,
+                    "value125": 125,
+                    "value126": 126,
+                    "value127": 127
+                }
+            },
+            "fxRackQLinks": []
+        },
+        "arrangementClipMap": [
+            {
+                "key": 0,
+                "value": {
+                    "version": 1,
+                    "launchQuantisation": 1,
+                    "startPulses": 0,
+                    "endPulses": 4915200,
+                    "loopStartPulses": 0,
+                    "loopEndPulses": 15360,
+                    "loop": false,
+                    "legato": true,
+                    "launch": 0,
+                    "name": "Harpie 4T Control",
+                    "colour": 0,
+                    "eventList": {
+                        "length": 9223372036854775807,
+                        "events": []
+                    },
+                    "midiBankAndProgramNumber": {
+                        "midiBankEnable": false,
+                        "midiBankMsb": 0,
+                        "midiBankLsb": 0,
+                        "midiProgramNumberEnable": false,
+                        "midiProgramNumber": 0
+                    }
+                }
+            }
+        ],
+        "sharedClipMap": [
+            {
+                "key": 1,
+                "value": {
+                    "version": 1,
+                    "launchQuantisation": 0,
+                    "startPulses": 0,
+                    "endPulses": 3840,
+                    "loopStartPulses": 0,
+                    "loopEndPulses": 3840,
+                    "loop": true,
+                    "legato": false,
+                    "launch": 0,
+                    "name": "Harpie 4T Control 1",
+                    "colour": 0,
+                    "eventList": {
+                        "length": 9223372036854775807,
+                        "events": []
+                    },
+                    "midiBankAndProgramNumber": {
+                        "midiBankEnable": false,
+                        "midiBankMsb": 0,
+                        "midiBankLsb": 0,
+                        "midiProgramNumberEnable": false,
+                        "midiProgramNumber": 0
+                    }
+                }
+            }
+        ],
+        "recordArm": false,
+        "midiBankAndProgramNumber": {
+            "midiBankEnable": false,
+            "midiBankMsb": 0,
+            "midiBankLsb": 0,
+            "midiProgramNumberEnable": false,
+            "midiProgramNumber": 0
+        },
+        "midiInputRoute": {
+            "inputPort": {
+                "type": 0,
+                "deviceName": "Mockba Harpie 4T",
+                "deviceId": "137-0",
+                "os": "Linux"
+            },
+            "inputChannel": 13
+        },
+        "midiOutputRoute": {
+            "outputPort": {
+                "type": 1,
+                "deviceName": "Mockba Harpie 4T - CH:13",
+                "deviceId": "136-0",
+                "os": "Linux"
+            },
+            "outputChannel": 12
+        },
+        "midiMonitorable": {
+            "state": 3
+        }
+    }
+}
