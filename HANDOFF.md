@@ -1,4 +1,4 @@
-# force-jv880 — v0.9 handoff
+# force-jv880 — v1.0
 
 ## UPDATE 2026-09-17: RATE_CORRECTION measured correct — crackle's cause is still open
 
@@ -46,25 +46,25 @@ playing notes/patches, not during an idle soak.
   crackle's real cause is still open; next step is reproducing it under
   actual note/patch load, not idle drift.
 
-## Outstanding work for v1.0 (not yet done)
-- **Web UI sync bug**: knobs don't refresh when switching patches via the
-  dropdown (same bug/likely same root cause as force-dx7 — worth fixing
-  both together). Need a "reseed everything after patch change" call.
-- **nodeServer integration not yet applied**: `nodeserver-integration/`
-  has the redirect module + README instructions ready, but nobody has
-  actually copied `forcejv880.js` into a live nodeServer install or added
-  the `ENDPOINTS.js` entry yet.
-- Real audible patch-quality review beyond spot-checking.
-- `.xtk` template never confirmed rendering correctly on the physical
-  touchscreen (same open item as every port in this project).
-- Deeper clock-drift fix (see above) — parked, not a quick follow-up.
+## Done for v1.0 (all resolved 2026-09-17, see git log for detail)
+- **Web UI sync bug**: fixed — `syncPresetName()` now calls
+  `seedValues(true)` once a patch swap is confirmed landed, force-refetching
+  every control instead of skipping already-cached ones.
+- **nodeServer integration**: applied — `forcejv880.js` copied in and the
+  `ENDPOINTS.js` entry added, live and working.
+- **MIDI port / display name rename**: done (`JV880:In (Mockba)`, "JV-880"
+  not "Force JV-880" on the home page).
+- **Output Mix section**: added (Voice Out / Channel / Voice Vol), first
+  row of controls, exposing the host-level mix.* API that already existed
+  but was never surfaced in the UI.
+- **Clock-drift correction**: measured and confirmed correct (+0.1ppm
+  residual over a 20-minute idle run) — see UPDATE section above. Not the
+  cause of the residual crackle.
 
-## New naming-convention requests (cross-project, see also force-dx7)
-- Rename this addon's virtual MIDI port from `Mockba JV880:In` to
-  `JV880 In (Mockba)` — change in `jv_host.cpp`'s `client` default / RtMidi
-  port name.
-- On nodeServer, wherever this addon's name is displayed (NSMODULE.json's
-  `NAME`, the home-page ENDPOINTS.js entry's `NAME`), drop the leading
-  "Force" — should read "JV-880", not "Force JV-880". Scope of this rename
-  across the OTHER addons (acid/maze/maze-seq) wasn't explicitly confirmed
-  — check with the user before renaming those too.
+## Still open
+- The residual "vinyl crackle" itself — confirmed NOT a clock-drift issue
+  (see above), real cause still unknown. Needs reproducing under actual
+  note/patch load, not another idle measurement.
+- Real audible patch-quality review beyond spot-checking.
+- `.xtk` template screen rendering — handled outside this project's own
+  session, not verified here.
