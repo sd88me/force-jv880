@@ -1642,7 +1642,7 @@
     "midiInputRoute": {
       "inputPort": {
         "type": 0,
-        "deviceName": "Mockba JV880",
+        "deviceName": "JV880:In (Mockba)",
         "deviceId": "0-0",
         "os": "Linux"
       },
@@ -1651,7 +1651,7 @@
     "midiOutputRoute": {
       "outputPort": {
         "type": 1,
-        "deviceName": "Mockba JV880 - CH:1",
+        "deviceName": "JV880:Out (Mockba)",
         "deviceId": "0-0",
         "os": "Linux"
       },
