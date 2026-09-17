@@ -1,5 +1,27 @@
 # force-jv880 — v0.9 handoff
 
+## UPDATE 2026-09-17: RATE_CORRECTION measured correct — crackle's cause is still open
+
+Ran a real 20-minute unattended measurement on the live device (current
+production binary, untouched, engine idle the whole time -- no notes
+played) with a liveness check every 30s and the full 5s backlog log
+pulled afterward, to replace guessing from short live spot checks.
+Linear-fit result on the post-transient data (first 90s excluded):
+**+0.1ppm residual drift** -- essentially zero, on top of the already-
+deployed ~1021ppm `RATE_CORRECTION`. No startup transient either: backlog
+started around ~150 frames and stayed there the entire 20 minutes (this
+project doesn't have force-dx7's ~15-20 minute startup-decay behavior --
+see its own HANDOFF.md, same measurement session).
+
+**This rules out RATE_CORRECTION miscalibration as the residual "vinyl
+crackle" cause** described below -- the constant is correct, confirmed by
+measurement, not just re-assumed. Since this test ran fully idle (no MIDI
+input at all) and stayed rock-stable, the crackle is more likely tied to
+something that only shows up under actual note-triggered load (voice
+allocation, envelope computation spikes, etc.) than to steady-state clock
+drift. Any future investigation should reproduce it live while actually
+playing notes/patches, not during an idle soak.
+
 ## What's done and verified
 - Full engine: mcu.cpp/mcu_opcodes.cpp/pcm.cpp vendored verbatim.
   jv880_plugin.cpp vendored with two documented edits: both `SCHED_FIFO`
@@ -17,12 +39,12 @@
 - Clock-drift wobble/crackle: `RATE_CORRECTION` fix applied (same constant
   proven in force-maze, ~1000ppm compensation) — user confirmed this
   helped but a residual "vinyl crackle" (occasional backlog-trim clicks)
-  remains. This is an **accepted, known limitation for now**, matching
-  force-maze's own long-standing tradeoff — a full fix needs an adaptive
-  controller, already tried once in this project and reverted because
-  live-tuning against a noisy backlog signal gave inconsistent results.
-  Revisiting it properly needs a long, carefully-logged (not live-trial-
-  and-error) measurement session — flagged, not attempted again yet.
+  remains. **2026-09-17: the long measurement session this note asked for
+  has now happened (see UPDATE at top of this file)** — `RATE_CORRECTION`
+  itself is confirmed correct (+0.1ppm residual over 20 idle minutes), so
+  an adaptive controller for clock drift isn't the fix needed here. The
+  crackle's real cause is still open; next step is reproducing it under
+  actual note/patch load, not idle drift.
 
 ## Outstanding work for v1.0 (not yet done)
 - **Web UI sync bug**: knobs don't refresh when switching patches via the

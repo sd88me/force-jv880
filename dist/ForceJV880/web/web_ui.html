@@ -899,7 +899,11 @@
     var tries=0;
     (function poll(){
       remote.getParam(PREFIX+"preset_name").then(function(v){
-        if (v!=null && v!==""){ state.values["preset_name"]=String(v); refreshPreset(); }
+        // Patch swap confirmed landed -- reseed every knob/control from the
+        // now-current device state, not just the name (this used to only
+        // refresh preset_name/preset_count, leaving every other control
+        // showing the PREVIOUS patch's values until manually touched).
+        if (v!=null && v!==""){ state.values["preset_name"]=String(v); refreshPreset(); seedValues(true); }
         else if (++tries<12) setTimeout(poll,150);
       });
     })();
@@ -979,21 +983,27 @@
     seedValues();
   }
 
-  function seedValues(){
+  function seedValues(force){
     // Seed current values from the host's param cache (getParam is cached, not
     // a fresh device read). onParamChange covers live changes after this. Only
     // fetch keys not already populated by a push. preset_name/preset_count are
     // get_param-only meta keys (absent from chain_params), fetched explicitly.
-    ["preset_name","preset_count"].forEach(function(k){
-      remote.getParam(PREFIX+k).then(function(v){ if(v!=null&&v!==""){ state.values[k]=String(v); refreshPreset(); } });
-    });
+    // force=true (called from syncPresetName after a patch change) re-fetches
+    // every key regardless of what's already cached, since a patch swap makes
+    // ALL of them stale at once -- the normal boot-time skip-if-cached path
+    // would otherwise leave every control showing the previous patch.
+    if (!force){
+      ["preset_name","preset_count"].forEach(function(k){
+        remote.getParam(PREFIX+k).then(function(v){ if(v!=null&&v!==""){ state.values[k]=String(v); refreshPreset(); } });
+      });
+    }
     var keys = state.order.slice();
     var i=0;
     function next(){
       var batch=0;
       while(i<keys.length && batch<24){
         var k=keys[i++];
-        if (state.values[k]!==undefined) continue;   // already arrived via a push
+        if (!force && state.values[k]!==undefined) continue;   // already arrived via a push
         (function(k){
           remote.getParam(PREFIX+k).then(function(v){
             if(v!=null&&v!==""){ pushValue(k,v); if(k==="preset") refreshPreset(); }
