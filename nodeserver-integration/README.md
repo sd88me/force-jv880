@@ -13,8 +13,8 @@ JV-880 doesn't get silently lost the same way.
 Automatic: nodeServer's `moduler` endpoint (`api/endpoints/moduler/index.js`)
 scans every `AddOns/*/NSMODULE.json` and lists whatever it finds, with
 start/stop + autolaunch-toggle controls driven entirely by that file. Once
-`addon/NSMODULE.json` is deployed inside `AddOns/ForceJV880/`, "Force
-JV-880" just appears there - see that file's own `DESCRIPTION` for the one
+`addon/NSMODULE.json` is deployed inside `AddOns/ForceJV880/`, "JV-880"
+just appears there - see that file's own `DESCRIPTION` for the one
 caveat (toggling RUNNING there starts/stops `jv_host` only, it doesn't arm
 the LD_PRELOAD tap or restart `acvs`).
 
@@ -28,17 +28,17 @@ otherwise arrive as one unparseable string).
 
 1. Copy `forcejv880.js` to nodeServer's `app/api/endpoints/forcejv880.js`.
 2. Add this entry to `app/api/ENDPOINTS.js`'s exported array (after the
-   "Force Maze Voice" entry is a reasonable place):
+   "Maze Voice" entry is a reasonable place):
 
 ```js
     {
-        // Force JV-880 runs its own standalone server (not an in-process
+        // JV-880 runs its own standalone server (not an in-process
         // nodeServer module -- see force-jv880/web/server.py). URL/PARAM
         // stay a plain relative path on purpose (home.js's escape() call
         // mangles absolute "http://host:port" URLs -- see forcejv880.js);
         // clicking this link hits nodeServer's own /forcejv880 route, which
         // forcejv880.js immediately 302-redirects out to the real panel.
-        NAME: "Force JV-880",
+        NAME: "JV-880",
         PATH: "./api/endpoints/forcejv880.js",
         PARAM: "/forcejv880",
         URL: "/forcejv880",

@@ -422,7 +422,7 @@ static void usage(const char *me) {
     fprintf(stderr,
         "usage: %s [options]\n"
         "  -v                    verbose\n"
-        "  --client NAME         ALSA client name       (default: Mockba JV880)\n"
+        "  --client NAME         ALSA client name       (default: JV880)\n"
         "  --module-dir PATH     dir containing module.json + roms/ (default: .)\n"
         "  --ctrl-sock PATH      control socket path     (default: /tmp/jv880_ctrl.sock)\n"
         "  --control-channel N   1-16, CC-in for the Q-Link track (default: 1)\n"
@@ -432,7 +432,7 @@ static void usage(const char *me) {
 }
 
 int main(int argc, char **argv) {
-    std::string client = "Mockba JV880";
+    std::string client = "JV880";
     std::string module_dir = ".";
 
     for (int i = 1; i < argc; i++) {
@@ -494,7 +494,7 @@ int main(int argc, char **argv) {
     RtMidiIn *in = nullptr;
     try {
         in = new RtMidiIn(RtMidi::UNSPECIFIED, client, 256);
-        in->openVirtualPort("In");
+        in->openVirtualPort("In (Mockba)");
         in->ignoreTypes(true, true, true);
         in->setCallback(&on_midi_cb, nullptr);
     } catch (RtMidiError &e) {
@@ -509,8 +509,8 @@ int main(int argc, char **argv) {
     std::signal(SIGTERM, on_signal);
 
     fprintf(stderr,
-        "[jv880] up. port '%s:In'  ctrl socket %s  shm %s  ctrl ch %d\n"
-        "[jv880] route a MIDI track to '%s:In' for notes and CC (Q-Link); audio\n"
+        "[jv880] up. port '%s:In (Mockba)'  ctrl socket %s  shm %s  ctrl ch %d\n"
+        "[jv880] route a MIDI track to '%s:In (Mockba)' for notes and CC (Q-Link); audio\n"
         "[jv880] is mixed into the Force's capture input via ForceAudioIn (must be enabled).\n",
         client.c_str(), g_ctrl_sock_path.c_str(), g_shm_name, g_ctrl_ch + 1, client.c_str());
 
