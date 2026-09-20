@@ -3,11 +3,8 @@
 
 DRAFT / MOCKUP. Layout is computed here (see docs/SHADOW-GUI-PROPOSAL.md).
 Keys are the real jv880 plugin keys (nvram_tone_<n>_*, nvram_patchCommon_*,
-macro_*) EXCEPT where noted MOCK: the envelope graphs. force-shadow's `env`
-widget reads sibling knobs <prefix>r1..r4 / l1..l4 (DX7 naming); the JV keys
-are nvram_tone_<n>_penvtime1.. / penvlevel1.., so a real build needs a small
-force-shadow change (env with time/level suffixes). Until then the mockup
-uses env-compatible placeholder knob keys.
+macro_*) and the envelope graphs, which use force-shadow's env widget in
+tkey/lkey mode (nvram_tone_<n>_penvtime%d / penvlevel%d sibling knobs).
 
   python3 scripts/gen_shadow_page.py [--out path]
 """
@@ -138,19 +135,26 @@ def patch_tab():
         knob(cx, y2 + 190, 28, lb, PC + k, 0, 127)
     toggle(xs[4], y2 + 190, "OUT", PC + "chorusoutput")
 
-def envcol(x, w, y, h, title, mock, tone):
+def envcol(x, w, y, h, title, kind, n):
+    """Draggable envelope graph. kind: penv (pitch, signed levels), tvfenv (filter),
+    tvaenv (amp, 3 levels). The T/L values live in hidden knobs (read back from the
+    engine like any other param); dragging a point sets its time (x) and level (y)."""
+    t = T % (n - 1)
+    lo, hi, nl = (-63, 63, 4) if kind == "penv" else (0, 127, 3 if kind == "tvaenv" else 4)
     frame(x, y, w, h, title)
-    emit(f'env cx={x + w//2} cy={y + 62} w={w - 40} h=44 prefix={mock}')
-    xs = row(4, x, x + w)
-    for i, cx in enumerate(xs):
-        knob(cx, y + 126, 16, f"T{i+1}", f"{mock}r{i+1}", 0, 127)
-        knob(cx, y + 226, 16, f"L{i+1}", f"{mock}l{i+1}", 0, 127)
+    emit(f'env cx={x + w//2} cy={y + 46 + (h - 62) // 2} w={w - 32} h={h - 62} prefix={t}{kind} '
+         f'tkey={t}{kind}time%d lkey={t}{kind}level%d lmin={lo} lmax={hi} nl={nl}')
+    for i in range(4):
+        emit(f'knob cx=0 cy=0 r=1 label="T{i+1}" key={t}{kind}time{i+1} min=0 max=127 pct=50 hidden=1')
+        if i < nl:
+            emit(f'knob cx=0 cy=0 r=1 label="L{i+1}" key={t}{kind}level{i+1} min={lo} max={hi} pct=50 hidden=1')
 
 def tone_tab(n):
     t = T % (n - 1)
     emit(f'[tab TONE {n}]'); topbar()
-    frame(L, BODY_Y, R - L, 124, f"TONE {n}  WAVE / PITCH")
-    cy = BODY_Y + 58
+    ah = 150
+    frame(L, BODY_Y, R - L, ah, f"TONE {n}  WAVE / PITCH")
+    cy = BODY_Y + 76
     toggle(100, cy, "TONE", t + "toneswitch")
     enum_h(300, cy + 8, "", t + "wavegroup", ["INT-A", "INT-B", "EXP-A", "EXP-B"], 64)
     knob(520, cy, 24, "WAVE #", t + "wavenumber", 0, 255)
@@ -159,20 +163,21 @@ def tone_tab(n):
     knob(930, cy, 24, "COARSE", t + "pitchcoarse", -48, 48)
     knob(1070, cy, 24, "FINE", t + "pitchfine", -50, 50)
     cw = (R - L - 32) // 3
-    y = BODY_Y + 124 + 12
-    for i, (title, mock) in enumerate([("PITCH ENV", f"tone{n}_penv_"), ("FILTER ENV", f"tone{n}_tvf_"), ("AMP ENV", f"tone{n}_tva_")]):
-        envcol(L + i * (cw + 16), cw, y, 292, title, mock, t)
-    y3 = y + 292 + 12
+    y = BODY_Y + ah + 12
+    eh = 250
+    for i, (title, mock) in enumerate([("PITCH ENV", "penv"), ("FILTER ENV", "tvfenv"), ("AMP ENV", "tvaenv")]):
+        envcol(L + i * (cw + 16), cw, y, eh, title, mock, n)
+    y3 = y + eh + 12
     hw = (R - L - 16) // 2
     for j, lf in enumerate((1, 2)):
         x = L + j * (hw + 16)
         frame(x, y3, hw, BODY_Y + BODY_H - y3, f"LFO {lf}")
-        enum_h(x + 190, y3 + 56, "", f"{t}lfo{lf}form", ["TRI", "SIN", "SAW", "SQU", "RND1", "RND2"], 54)
-        if lf == 1: toggle(x + hw - 60, y3 + 52, "SYNC", t + "lfo1synchro")
+        enum_h(x + 190, y3 + 62, "", f"{t}lfo{lf}form", ["TRI", "SIN", "SAW", "SQU", "RND1", "RND2"], 54)
+        if lf == 1: toggle(x + hw - 60, y3 + 58, "SYNC", t + "lfo1synchro")
         xs = row(6, x, x + hw)
         for cx, (lb, k, lo, hi) in zip(xs, [("RATE", "rate", 0, 127), ("DELAY", "delay", 0, 127), ("FADE", "fadetime", 0, 127),
                                             ("PITCH", "pitchdepth", -63, 63), ("FILTER", "tvfdepth", -63, 63), ("AMP", "tvadepth", -63, 63)]):
-            knob(cx, y3 + 128, 18, lb, f"{t}lfo{lf}{k}", lo, hi)
+            knob(cx, y3 + 134, 20, lb, f"{t}lfo{lf}{k}", lo, hi)
 
 def banks_tab():
     emit('[tab BANKS]'); topbar()
