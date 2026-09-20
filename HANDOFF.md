@@ -1,4 +1,4 @@
-# force-jv880 — v1.1
+# force-jv880 — v1.2
 
 ## UPDATE 2026-09-20 (v1.1.0): shadow-mode touchscreen GUI
 
@@ -15,9 +15,9 @@ design notes in `docs/SHADOW-GUI-PROPOSAL.md`.
 - Not on the page (web UI only): mod/aftertouch/expression matrices, filter
   cutoff/resonance and tone level/pan, key-follow/velocity curves, Patch/Perf
   mode and macro mode (both read back as text, not an index).
-- The envelope graphs use placeholder sibling keys (`toneN_penv_r1..`), so
-  they don't reflect real values yet: force-shadow's `env` widget wants
-  `<prefix>r1..4/l1..4`, JV uses `nvram_tone_<n>_penvtime1`/`penvlevel1`.
+- Envelope graphs are wired to the real tone keys (`nvram_tone_<n>_penv/tvfenv/tvaenvtime|level%d`) and
+  **draggable**: x = time, y = level; the T/L values live in hidden knob widgets so readback and
+  persistence work like any other param. Needs force-shadow's `env` `tkey/lkey` mode.
 - Patch list is one flat list (MAX 256 items); a large expansion set will need
   a per-bank list.
 - Deploy: `shadow_page.conf` -> `AddOns/ForceJV880/`, `force_shadow.so` ->

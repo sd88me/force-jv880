@@ -1,6 +1,6 @@
 # JV-880 shadow-mode GUI: layout proposal (DRAFT for review)
 
-Status: proposal only. Nothing built or deployed yet.
+Status: built and deployed (see HANDOFF.md). This file is the original layout proposal; the mockups in `mockups/` show the current page.
 
 ## Constraints from force-shadow
 

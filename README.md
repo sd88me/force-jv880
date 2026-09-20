@@ -12,6 +12,32 @@ Like [`force-maze`](https://github.com/sd88me/force-maze), this is a real
 Force's own app reads from its audio-in capture device, so the voice comes
 out on a normal Audio-In track.
 
+## On-device touchscreen GUI (shadow mode)
+
+A full editor page for the Force's own touchscreen, rendered by
+[`force-shadow`](https://github.com/sd88me/force-shadow): open it with
+`SHIFT+SCENE-2`, start/stop the engine from the ENGINE cell in the top bar.
+Charcoal panels with a yellow-green dot-matrix LCD top bar (nameplate, bank,
+patch stepper, engine state).
+
+| Tab | Contents |
+|-----|----------|
+| PLAY | Output (Voice Out/Vol, octave, patch level/pan), the 8 macros, reverb/chorus sends, tone on/off |
+| PATCH | Control (analog feel, key assign, solo legato, velocity switch), bend/portamento, reverb, chorus |
+| TONE 1-4 | Wave/FXM/pitch, **draggable Pitch/Filter/Amp envelope graphs** (drag a point: x = time, y = level), LFO 1 and 2 |
+| BANKS | Bank/expansion list (tap = jump to that bank) and a paged patch list |
+
+Mockups are in [`docs/mockups/`](docs/mockups); layout notes in
+[`docs/SHADOW-GUI-PROPOSAL.md`](docs/SHADOW-GUI-PROPOSAL.md). The page file
+`addon/shadow_page.conf` is **generated** by `scripts/gen_shadow_page.py`
+(edit the script, rerun it). It needs a `force-shadow` build with the
+dot-matrix top bar, plain frames and draggable envelope support.
+Deploy: copy `shadow_page.conf` to `AddOns/ForceJV880/` (staged `.new` + `mv`;
+it is only read when MPC starts), and make sure the current `force_shadow.so`
+is deployed. Not on the page (web UI only): the mod/aftertouch/expression
+matrices, filter cutoff/resonance, tone level/pan, key-follow and velocity
+curves, Patch/Perf mode.
+
 ## Why JV-880 and not Osirus (Virus)
 
 This project first attempted porting `schwung-virus`'s **Osirus** module
