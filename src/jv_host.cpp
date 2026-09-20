@@ -328,6 +328,53 @@ static bool handle_mix_get(const std::string &key, std::string &out) {
     return false;
 }
 
+/* ---------------------------------------------------------------------------
+ * Bank navigation for the shadow BANKS tab. The plugin only exposes per-bank
+ * bank_<i>_name / bank_<i>_start plus bank_count (patchbank_list is a different
+ * 3-entry Preset A/B/Internal list), so bank_list / bank_index are synthesized
+ * here and SET bank_index N jumps to that bank's first patch. Call with g_lock held.
+ * ------------------------------------------------------------------------- */
+static int bank_param_int(const char *k) {
+    char b[64] = {0};
+    int n = g_api->get_param(g_inst, k, b, sizeof(b));
+    return n > 0 ? atoi(b) : -1;
+}
+static bool handle_bank_get(const std::string &key, std::string &out) {
+    if (key != "bank_list" && key != "bank_index") return false;
+    int count = bank_param_int("bank_count");
+    if (count < 0) return false;
+    if (key == "bank_index") {
+        int preset = bank_param_int("preset"), cur = 0;
+        for (int i = 0; i < count; i++) {
+            char k[32]; std::snprintf(k, sizeof(k), "bank_%d_start", i);
+            if (preset >= bank_param_int(k)) cur = i;
+        }
+        out = std::to_string(cur);
+        return true;
+    }
+    out = "[";
+    for (int i = 0; i < count; i++) {
+        char k[32], nm[64] = {0};
+        std::snprintf(k, sizeof(k), "bank_%d_name", i);
+        g_api->get_param(g_inst, k, nm, sizeof(nm));
+        std::string esc;
+        for (const char *c = nm; *c; c++) { if (*c == '"' || *c == '\\') esc += '\\'; esc += *c; }
+        if (i) out += ",";
+        out += "{\"index\":" + std::to_string(i) + ",\"name\":\"" + esc + "\"}";
+    }
+    out += "]";
+    return true;
+}
+static bool handle_bank_set(const std::string &key, const std::string &val) {
+    if (key != "bank_index") return false;
+    int b = atoi(val.c_str()), count = bank_param_int("bank_count");
+    if (b < 0 || b >= count) return true;
+    char k[32]; std::snprintf(k, sizeof(k), "bank_%d_start", b);
+    int start = bank_param_int(k);
+    if (start >= 0) g_api->set_param(g_inst, "preset", std::to_string(start).c_str());
+    return true;
+}
+
 static void handle_ctrl_line(int fd, const std::string &line) {
     char cmd[16] = {0}, key[64] = {0}, val[256] = {0};
     if (sscanf(line.c_str(), "%15s", cmd) != 1) { send(fd, "ERR\n", 4, 0); return; }
@@ -340,6 +387,7 @@ static void handle_ctrl_line(int fd, const std::string &line) {
     if (!strcmp(cmd, "SET") && sscanf(line.c_str(), "%*s %63s %255[^\n]", key, val) == 2) {
         if (handle_mix_set(key, val)) { send(fd, "OK\n", 3, 0); return; }
         std::lock_guard<std::mutex> lk(g_lock);
+        if (handle_bank_set(key, val)) { send(fd, "OK\n", 3, 0); return; }
         g_api->set_param(g_inst, key, val);
         send(fd, "OK\n", 3, 0);
         return;
@@ -358,6 +406,12 @@ static void handle_ctrl_line(int fd, const std::string &line) {
         static char buf[65536];
         int n;
         { std::lock_guard<std::mutex> lk(g_lock);
+          std::string bank_val;
+          if (handle_bank_get(key, bank_val)) {
+              std::string reply = bank_val + "\n";
+              send(fd, reply.c_str(), reply.size(), 0);
+              return;
+          }
           n = g_api->get_param(g_inst, key, buf, sizeof(buf)); }
         if (n <= 0) { send(fd, "ERR\n", 4, 0); return; }
         std::string reply(buf, n); reply += "\n";
