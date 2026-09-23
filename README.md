@@ -39,7 +39,7 @@ from its web panel at `http://<force-ip>:8306`.
 
 A full editor page for the Force's own touchscreen, rendered by
 [`force-shadow`](https://github.com/sd88me/force-shadow): open it with
-`SHIFT+SCENE-2`, start/stop the engine from the ENGINE cell in the top bar.
+`SHIFT+SCENE-3`, start/stop the engine from the ENGINE cell in the top bar.
 Charcoal panels with a yellow-green dot-matrix LCD top bar (nameplate, bank,
 patch stepper, engine state).
 
