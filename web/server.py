@@ -29,7 +29,7 @@ ENGINE_BIN = ADDON_DIR / "jv_host"
 CTRL_SOCK = "/tmp/jv880_ctrl.sock"
 SOCK_TIMEOUT = 1.0
 CONTROL_CHANNEL = "1"               # must match the .xtk template's track output channel
-# ForceAudioIn's forceAudioIn.log shows slot 0 already repeatedly used by
+# ForceAudioJack's forceAudioJack.log shows slot 0 already repeatedly used by
 # force-maze's own maze_host (its own default too) on this device -- default
 # to a different slot so running both voices at once doesn't collide. Change
 # together with NSMODULE.json's --mix-slot argument if you change this.

@@ -1,6 +1,6 @@
 {
   "NAME": "JV-880",
-  "DESCRIPTION": "Roland JV-880 PCM rompler emulation (port of the Schwung 'Mini-JV' module for Ableton Move, itself based on mini-jv880/Nuked-SC55). Headless: control it from a Force MIDI track via CC (Q-Link) or from the web panel. Requires the separate ForceAudioIn addon to be enabled (arms the shared injection tap at boot, zero voices) - this toggle only starts/stops the jv_host process itself, no LD_PRELOAD/acvs involved. Autoload is deliberately unavailable here: a voice must never be attached before an acvs restart - always start it after boot, from this page. Needs your own JV-880 v1.0.0 ROM files placed in this addon's roms/ folder (not included - copyrighted Roland firmware). See README.md / docs/CC-MAP.md.",
+  "DESCRIPTION": "Roland JV-880 PCM rompler emulation (port of the Schwung 'Mini-JV' module for Ableton Move, itself based on mini-jv880/Nuked-SC55). Headless: control it from a Force MIDI track via CC (Q-Link) or from the web panel. Requires the separate ForceAudioJack addon to be enabled (arms the shared injection tap at boot, zero voices) - this toggle only starts/stops the jv_host process itself, no LD_PRELOAD/acvs involved. Autoload is deliberately unavailable here: a voice must never be attached before an acvs restart - always start it after boot, from this page. Needs your own JV-880 v1.0.0 ROM files placed in this addon's roms/ folder (not included - copyrighted Roland firmware). See README.md / docs/CC-MAP.md.",
   "PROCESSNAME": "jv_host",
   "DIRNAME": "ForceJV880",
   "FILENAME": "jv_host",
@@ -14,6 +14,6 @@
     { "NAME": "control-channel flag", "VALUE": "--control-channel" },
     { "NAME": "Q-Link control channel (1-16)", "VALUE": "1" },
     { "NAME": "mix-slot flag", "VALUE": "--mix-slot" },
-    { "NAME": "ForceAudioIn voice slot (0-3; 1, not 0, to avoid Maze Voice's own default)", "VALUE": "1" }
+    { "NAME": "ForceAudioJack voice slot (0-3; 1, not 0, to avoid Maze Voice's own default)", "VALUE": "1" }
   ]
 }

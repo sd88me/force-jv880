@@ -1,5 +1,5 @@
 /*
- * VENDORED from https://github.com/sd88me/force-audioin (src/forceAudioInject.h)
+ * VENDORED from https://github.com/sd88me/force-audio-jack (src/forceAudioInject.h)
  * - that repo owns the canonical copy since forceAudioJack.c/forceAudioJack.so
  * define this layout; this copy exists only because maze_host (the producer
  * below) needs it too. Keep byte-for-byte identical to the canonical copy -

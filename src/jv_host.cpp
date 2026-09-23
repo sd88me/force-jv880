@@ -11,9 +11,9 @@
  *   set_param(key, "64") from a knob       a local control socket, or CC on
  *                                          the control channel -> set_param()
  *   knob repaint via get_param             the web UI's /describe calls get_param
- *   int16 stereo out via the mailbox       float32 into ForceAudioIn's shared-
+ *   int16 stereo out via the mailbox       float32 into ForceAudioJack's shared-
  *                                          memory ring (forceAudioInject.h) --
- *                                          forceAudioIn.so (LD_PRELOAD'd into
+ *                                          forceAudioJack.so (LD_PRELOAD'd into
  *                                          /usr/bin/MPC) mixes it into what MPC
  *                                          reads from its capture device.
  *
@@ -44,7 +44,7 @@
  * real-time MCU stepping into an internal ring -- render_block() here is a
  * drain of whatever that thread has already produced, not a synchronous
  * render, so this shim's timer loop just needs to poll it often enough that
- * ForceAudioIn's own ring never starves, using the same elapsed-real-time
+ * ForceAudioJack's own ring never starves, using the same elapsed-real-time
  * cadence force-acid/force-maze use (never assume a fixed callback period).
  *
  * Build: see scripts/build.sh (native armhf under QEMU, links -lasound
@@ -244,7 +244,7 @@ static void on_midi_cb(double /*dt*/, std::vector<unsigned char> *msg, void * /*
  * Timer thread -- drains jv880_plugin.cpp's own already-real-time-computed
  * output (see the top-of-file note: its background "emu thread" does the
  * actual MCU stepping, render_block() here just pulls what's ready) into
- * ForceAudioIn's ring, at the true elapsed-wall-clock cadence rather than a
+ * ForceAudioJack's ring, at the true elapsed-wall-clock cadence rather than a
  * fixed period, same technique and same reasoning as force-acid/force-maze's
  * timer loops: sleep_for() jitter on a plain SCHED_OTHER thread means a fixed
  * "always ask for N frames" cadence silently falls behind real time.
@@ -320,7 +320,7 @@ static void timer_loop() {
  *   DESCRIBE\n            -> the module's chain_params JSON, one line
  *   NOTE <note> <vel>\n   -> trigger a note (web UI "audition" button)
  *
- * "mix.*" keys are host-level output-mix controls read by forceAudioIn.so
+ * "mix.*" keys are host-level output-mix controls read by forceAudioJack.so
  * directly from the shared-memory struct (see forceAudioInject.h) -- handled
  * here rather than forwarded to g_api->set_param/get_param, which only knows
  * jv880_plugin.cpp's own chain_params and would just error on an unknown key.
@@ -538,7 +538,7 @@ static void usage(const char *me) {
         "  --module-dir PATH     dir containing module.json + roms/ (default: .)\n"
         "  --ctrl-sock PATH      control socket path     (default: /tmp/jv880_ctrl.sock)\n"
         "  --control-channel N   1-16, CC-in for the Q-Link track (default: 1)\n"
-        "  --mix-slot N          voice slot 0..%d for forceAudioIn.so (default: 0) -\n"
+        "  --mix-slot N          voice slot 0..%d for forceAudioJack.so (default: 0) -\n"
         "                        each simultaneous voice needs a distinct slot\n",
         me, AI_MAX_VOICES - 1);
 }
@@ -623,7 +623,7 @@ int main(int argc, char **argv) {
     fprintf(stderr,
         "[jv880] up. port '%s:In (Mockba)'  ctrl socket %s  shm %s  ctrl ch %d\n"
         "[jv880] route a MIDI track to '%s:In (Mockba)' for notes and CC (Q-Link); audio\n"
-        "[jv880] is mixed into the Force's capture input via ForceAudioIn (must be enabled).\n",
+        "[jv880] is mixed into the Force's capture input via ForceAudioJack (must be enabled).\n",
         client.c_str(), g_ctrl_sock_path.c_str(), g_shm_name_in, g_ctrl_ch + 1, client.c_str());
 
     std::thread timer(timer_loop);
