@@ -492,18 +492,21 @@
     return wrap;
   }
 
-  // mix.channel's wire protocol is literal "L"/"R"/"L+R" strings (see
-  // jv_host.cpp's handle_mix_set/handle_mix_get), not the numeric enum
-  // indices makeControl's dropdown branch sends -- small bespoke control
-  // instead of forcing it through shared code that assumes indices.
-  function buildMixChanControl(){
+  // mix.dest's wire protocol is a literal label string (see jv_host.cpp's
+  // handle_mix_set/handle_mix_get), not the numeric enum indices
+  // makeControl's dropdown branch sends -- small bespoke control instead of
+  // forcing it through shared code that assumes indices. Options are which
+  // force-audiojack ring (Audio-In 1/2 or Out 3/4) this voice lands on, and
+  // mono/stereo within it -- see forceAudioInject.h.
+  var MIX_DEST_OPTIONS = ["IN1","IN2","OUT3","OUT4","IN1,2","OUT3,4"];
+  function buildMixDestControl(){
     var wrap = el("div","ctl");
-    wrap.appendChild(el("label", null, "Channel"));
+    wrap.appendChild(el("label", null, "Destination"));
     var sel = el("select");
-    ["L","R","L+R"].forEach(function(o){ var op=el("option",null,o); op.value=o; sel.appendChild(op); });
-    sel.value = "L+R";
-    sel.onchange = function(){ setParam("mix.channel", sel.value); };
-    onValue("mix.channel", function(v){ sel.value = (v==="L"||v==="R") ? v : "L+R"; });
+    MIX_DEST_OPTIONS.forEach(function(o){ var op=el("option",null,o); op.value=o; sel.appendChild(op); });
+    sel.value = "IN1,2";
+    sel.onchange = function(){ setParam("mix.dest", sel.value); };
+    onValue("mix.dest", function(v){ sel.value = MIX_DEST_OPTIONS.indexOf(v) >= 0 ? v : "IN1,2"; });
     wrap.appendChild(sel);
     return wrap;
   }
@@ -647,24 +650,22 @@
     fillGroup(ctlHost, "Voice", CONTROL_VOICE);
     fillGroup(ctlHost, "Bend / Portamento", CONTROL_BEND);
 
-    // -- Output Mix: host-level forceAudioIn.so per-voice mix controls
-    // (mix.enabled/mix.gain/mix.channel), NOT chain_params -- intercepted
-    // by jv_host's own control socket before ever reaching the DSP (see
-    // jv_host.cpp's handle_mix_set/handle_mix_get). Synthesize metadata for
-    // these three keys since they don't come from chain_params, so they
-    // can reuse the exact same makeControl/makeKnob widgets and the
-    // existing seed/reseed machinery (just add them to state.order) as
-    // everything else, same pattern force-maze's own "Output Mix" section
-    // uses for the identical host-level API. mix.channel is the one
-    // exception -- its wire values are literal "L"/"R"/"L+R" strings, not
-    // the numeric enum indices makeControl's dropdown branch assumes, so
-    // it gets a small bespoke control instead.
-    state.params["mix.enabled"] = {key:"mix.enabled", name:"Voice Out", type:"enum", options:["Off","On"]};
+    // -- Output Mix: host-level forceAudioJack.so per-voice mix controls
+    // (mix.gain/mix.dest), NOT chain_params -- intercepted by jv_host's own
+    // control socket before ever reaching the DSP (see jv_host.cpp's
+    // handle_mix_set/handle_mix_get). Synthesize metadata for mix.gain since
+    // it doesn't come from chain_params, so it can reuse the exact same
+    // makeKnob widget and the existing seed/reseed machinery (just add it to
+    // state.order) as everything else, same pattern force-maze's own
+    // "Output Mix" section uses for the identical host-level API. mix.dest
+    // is the one exception -- its wire values are literal destination
+    // labels, not the numeric enum indices makeControl's dropdown branch
+    // assumes, so it gets a small bespoke control instead. Voice Out
+    // (mix.enabled) removed: redundant with the engine power switch.
     state.params["mix.gain"] = {key:"mix.gain", name:"Voice Vol", type:"int", min:0, max:150};
-    state.order.push("mix.enabled", "mix.gain", "mix.channel");
+    state.order.push("mix.gain", "mix.dest");
     var mixRow = document.getElementById("mixRow");
-    var mixOn = makeControl("mix.enabled"); if (mixOn) mixRow.appendChild(mixOn);
-    mixRow.appendChild(buildMixChanControl());
+    mixRow.appendChild(buildMixDestControl());
     var mixGain = makeKnob("mix.gain"); if (mixGain) mixRow.appendChild(mixGain);
 
     // -- Effects: reverb + chorus sub-groups --

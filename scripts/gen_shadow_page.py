@@ -82,26 +82,37 @@ def topbar():
 
 def play_tab():
     emit('[tab PLAY]'); topbar()
-    frame(L, BODY_Y, 380, 300, "OUTPUT")
-    xs = row(3, L, L + 380)
-    toggle(xs[0], BODY_Y + 96, "VOICE OUT", "mix.enabled")
-    knob(xs[1], BODY_Y + 96, 30, "VOICE VOL", "mix.gain", 0, 150, 40)
-    knob(xs[2], BODY_Y + 96, 30, "OCTAVE", "octave_transpose", -4, 4)
-    knob(xs[0], BODY_Y + 226, 30, "PATCH LVL", PC + "patchlevel", 0, 127)
-    knob(xs[1], BODY_Y + 226, 30, "PATCH PAN", PC + "patchpan", 0, 127)
-    frame(432, BODY_Y, 812, 300, "MACROS  (offset all tones)")
+    # OUTPUT/MACROS grew from h=300 to h=330 (and EFFECT SENDS' start from
+    # +312 to +342) to fit the new DEST row above the existing two knob
+    # rows without the bottom row's value text running past the frame edge.
+    frame(L, BODY_Y, 380, 330, "OUTPUT")
+    # Voice on/off removed here (redundant with the ENGINE power switch);
+    # DEST replaces the old L/R/L+R channel notion with the destination
+    # bus/channel a voice lands on (see forceAudioInject.h): I1, I2, I1+2
+    # (stereo into Audio-In 1/2), O3, O4, O3+4 (stereo into Out 3/4) - I/O
+    # prefix kept short (no "IN"/"OUT") so all 6 options still fit the
+    # frame at a legible width; "+" not "," between paired numbers only
+    # because enum_h's options list is itself comma-delimited - see web
+    # GUI for the spelled-out "IN1,2"/"OUT3,4" labels.
+    enum_h(L + 190, BODY_Y + 60, "DEST", "mix.dest_idx", ["I1", "I2", "O3", "O4", "I1+2", "O3+4"], 60)
+    xs = row(2, L, L + 380)
+    knob(xs[0], BODY_Y + 140, 30, "VOICE VOL", "mix.gain", 0, 150, 40)
+    knob(xs[1], BODY_Y + 140, 30, "OCTAVE", "octave_transpose", -4, 4)
+    knob(xs[0], BODY_Y + 250, 30, "PATCH LVL", PC + "patchlevel", 0, 127)
+    knob(xs[1], BODY_Y + 250, 30, "PATCH PAN", PC + "patchpan", 0, 127)
+    frame(432, BODY_Y, 812, 330, "MACROS  (offset all tones)")
     xs = row(4, 432, 1244)
     for cx, (lb, k, lo, hi) in zip(xs, [("CUTOFF", "cutoff", 0, 127), ("RESO", "resonance", 0, 127), ("TVF DEPTH", "tvf_env_depth", -63, 63), ("LFO DEPTH", "lfo_depth", -63, 63)]):
-        knob(cx, BODY_Y + 96, 30, lb, "macro_" + k, lo, hi)
+        knob(cx, BODY_Y + 110, 30, lb, "macro_" + k, lo, hi)
     for cx, (lb, k) in zip(xs, [("ATTACK", "attack"), ("DECAY", "decay"), ("SUSTAIN", "sustain"), ("RELEASE", "release")]):
-        knob(cx, BODY_Y + 226, 30, lb, "macro_" + k, 0, 127)
-    frame(L, BODY_Y + 312, R - L, BODY_H - 312, "EFFECT SENDS")
+        knob(cx, BODY_Y + 250, 30, lb, "macro_" + k, 0, 127)
+    frame(L, BODY_Y + 342, R - L, BODY_H - 342, "EFFECT SENDS")
     xs = row(2, L, L + 500)
-    knob(xs[0], BODY_Y + 312 + 130, 34, "REVERB", PC + "reverblevel", 0, 127)
-    knob(xs[1], BODY_Y + 312 + 130, 34, "CHORUS", PC + "choruslevel", 0, 127)
+    knob(xs[0], BODY_Y + 342 + 130, 34, "REVERB", PC + "reverblevel", 0, 127)
+    knob(xs[1], BODY_Y + 342 + 130, 34, "CHORUS", PC + "choruslevel", 0, 127)
     # tone on/off strip: at-a-glance, like the JV-880 tone LEDs
     for i, cx in enumerate(row(4, 560, R)):
-        toggle(cx, BODY_Y + 312 + 190, f"TONE {i+1}", (T % i) + "toneswitch")
+        toggle(cx, BODY_Y + 342 + 190, f"TONE {i+1}", (T % i) + "toneswitch")
 
 def patch_tab():
     emit('[tab PATCH]'); topbar()

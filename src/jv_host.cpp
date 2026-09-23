@@ -84,7 +84,8 @@ static std::mutex        g_lock;        /* serialises every call into the core *
 static plugin_api_v2_t  *g_api  = nullptr;
 static void             *g_inst = nullptr;
 
-static ai_shm_t *g_shm = nullptr;
+static ai_shm_t *g_shm_in = nullptr;   /* Audio-In 1/2 ring (AI_SHM_NAME_FMT) */
+static ai_shm_t *g_shm_out = nullptr;  /* Out 3/4 ring (AI_SHM_NAME_FMT_OUT) */
 static std::atomic<uint64_t> g_ring_drops{0};
 
 static std::string g_chain_params_json;
@@ -146,33 +147,48 @@ static void apply_cc(int idx, int value /* 0..127 */) {
  * synth output panned by the plugin itself into stereo (chain_params has no
  * audio_in), same shape as force-maze's ring use.
  * ------------------------------------------------------------------------- */
-static char g_shm_name[24];
+static char g_shm_name_in[24];
+static char g_shm_name_out[24];
 
-static bool shm_setup() {
-    ai_shm_name(g_mix_slot, g_shm_name, sizeof(g_shm_name));
-    shm_unlink(g_shm_name);  /* we are the sole producer for this slot -- start clean */
-    int fd = shm_open(g_shm_name, O_CREAT | O_RDWR, 0666);
-    if (fd < 0) { perror("shm_open"); return false; }
-    if (ftruncate(fd, AI_SHM_BYTES) != 0) { perror("ftruncate"); close(fd); return false; }
+/* Opens/creates one ring at `name`, zeroed and stamped with the given
+ * initial mix state, magic published last. Shared by the in-bus and
+ * out-bus setup below -- same struct, different shm namespace. */
+static ai_shm_t *shm_open_ring(const char *name, uint32_t enabled, uint32_t channel_mask) {
+    shm_unlink(name);  /* we are the sole producer for this slot -- start clean */
+    int fd = shm_open(name, O_CREAT | O_RDWR, 0666);
+    if (fd < 0) { perror("shm_open"); return nullptr; }
+    if (ftruncate(fd, AI_SHM_BYTES) != 0) { perror("ftruncate"); close(fd); return nullptr; }
     void *m = mmap(nullptr, AI_SHM_BYTES, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     close(fd);
-    if (m == MAP_FAILED) { perror("mmap"); return false; }
+    if (m == MAP_FAILED) { perror("mmap"); return nullptr; }
 
-    g_shm = (ai_shm_t *)m;
-    memset(g_shm, 0, AI_SHM_BYTES);
-    g_shm->rate = (uint32_t)MOVE_SAMPLE_RATE;  /* jv880_plugin.cpp already resamples to this */
-    g_shm->channels = 2;
-    g_shm->enabled = 1;
-    g_shm->gain = 1.0f;
-    g_shm->channel_mask = AI_CHAN_LR;
-    __atomic_store_n(&g_shm->magic, AI_MAGIC, __ATOMIC_RELEASE);
-    return true;
+    ai_shm_t *shm = (ai_shm_t *)m;
+    memset(shm, 0, AI_SHM_BYTES);
+    shm->rate = (uint32_t)MOVE_SAMPLE_RATE;  /* jv880_plugin.cpp already resamples to this */
+    shm->channels = 2;
+    shm->enabled = enabled;
+    shm->gain = 1.0f;
+    shm->channel_mask = channel_mask;
+    __atomic_store_n(&shm->magic, AI_MAGIC, __ATOMIC_RELEASE);
+    return shm;
 }
 
-static void ring_push(const float *interleaved, uint32_t frames) {
-    if (!g_shm) return;
-    uint32_t head = g_shm->head;                                     /* sole producer */
-    uint32_t tail = __atomic_load_n(&g_shm->tail, __ATOMIC_ACQUIRE);
+/* Both rings are always created: the producer always renders into both (see
+ * ring_push), and "mix.dest" just flips which ring is `enabled` (mixed by
+ * forceAudioJack.so) -- same host-level mute contract as a single-ring
+ * voice, just applied per-destination. Default destination is IN1,2. */
+static bool shm_setup() {
+    ai_shm_name(g_mix_slot, g_shm_name_in, sizeof(g_shm_name_in));
+    ai_shm_name_out(g_mix_slot, g_shm_name_out, sizeof(g_shm_name_out));
+    g_shm_in  = shm_open_ring(g_shm_name_in, 1, AI_CHAN_LR);
+    g_shm_out = shm_open_ring(g_shm_name_out, 0, AI_CHAN_LR);
+    return g_shm_in && g_shm_out;
+}
+
+static void ring_push_one(ai_shm_t *shm, const float *interleaved, uint32_t frames) {
+    if (!shm) return;
+    uint32_t head = shm->head;                                     /* sole producer */
+    uint32_t tail = __atomic_load_n(&shm->tail, __ATOMIC_ACQUIRE);
     uint32_t space = (AI_RING_FRAMES - 1) - ((head - tail) & (AI_RING_FRAMES - 1));
 
     uint32_t take = frames;
@@ -182,12 +198,22 @@ static void ring_push(const float *interleaved, uint32_t frames) {
     }
     for (uint32_t i = 0; i < take; i++) {
         uint32_t fr = (head + i) & (AI_RING_FRAMES - 1);
-        float *dst = &g_shm->ring[(size_t)fr * AI_MAX_CH];
+        float *dst = &shm->ring[(size_t)fr * AI_MAX_CH];
         dst[0] = interleaved[2 * i];
         dst[1] = interleaved[2 * i + 1];
     }
-    __atomic_store_n(&g_shm->head, (head + take) & (AI_RING_FRAMES - 1), __ATOMIC_RELEASE);
-    g_shm->frames_written += take;
+    __atomic_store_n(&shm->head, (head + take) & (AI_RING_FRAMES - 1), __ATOMIC_RELEASE);
+    shm->frames_written += take;
+}
+
+/* Renders into both rings every tick regardless of which one is currently
+ * `enabled` -- same "still drains while muted" contract as a single-ring
+ * voice (see forceAudioInject.h), just applied to whichever ring isn't the
+ * active mix.dest right now, so switching destinations never resumes from a
+ * stale backlog. */
+static void ring_push(const float *interleaved, uint32_t frames) {
+    ring_push_one(g_shm_in, interleaved, frames);
+    ring_push_one(g_shm_out, interleaved, frames);
 }
 
 /* ---------------------------------------------------------------------------
@@ -273,7 +299,7 @@ static void timer_loop() {
 
         if (now - last_stat >= std::chrono::seconds(5)) {
             last_stat = now;
-            uint32_t backlog = g_shm ? (uint32_t)((g_shm->head - __atomic_load_n(&g_shm->tail, __ATOMIC_ACQUIRE))
+            uint32_t backlog = g_shm_in ? (uint32_t)((g_shm_in->head - __atomic_load_n(&g_shm_in->tail, __ATOMIC_ACQUIRE))
                                                    & (AI_RING_FRAMES - 1))
                                       : 0;
             fprintf(stderr, "[jv880] render thread: max wake gap %.1fms, %llu/%llu wakes > 9ms, ring drops %llu, "
@@ -299,32 +325,64 @@ static void timer_loop() {
  * here rather than forwarded to g_api->set_param/get_param, which only knows
  * jv880_plugin.cpp's own chain_params and would just error on an unknown key.
  * ------------------------------------------------------------------------- */
+/* mix.dest indices, in DEST_LABELS order below. */
+enum { DEST_IN1 = 0, DEST_IN2 = 1, DEST_OUT3 = 2, DEST_OUT4 = 3, DEST_IN12 = 4, DEST_OUT34 = 5 };
+static const char *DEST_LABELS[] = { "IN1", "IN2", "OUT3", "OUT4", "IN1,2", "OUT3,4" };
+static int g_dest_idx = DEST_IN12;   /* default: stereo into Audio-In 1,2, matches prior AI_CHAN_LR default */
+
+/* Applies a destination: exactly one of g_shm_in/g_shm_out is `enabled`
+ * (mixed by forceAudioJack.so), the other stays attached-but-muted so
+ * switching destinations never resumes from a stale backlog (see
+ * ring_push). channel_mask picks L/R/both within whichever bus is live. */
+static void apply_dest(int idx) {
+    g_dest_idx = idx;
+    bool is_out = (idx == DEST_OUT3 || idx == DEST_OUT4 || idx == DEST_OUT34);
+    g_shm_in->enabled  = is_out ? 0u : 1u;
+    g_shm_out->enabled = is_out ? 1u : 0u;
+    uint32_t mask = (idx == DEST_IN1 || idx == DEST_OUT3) ? AI_CHAN_L
+                  : (idx == DEST_IN2 || idx == DEST_OUT4) ? AI_CHAN_R
+                  : AI_CHAN_LR;
+    (is_out ? g_shm_out : g_shm_in)->channel_mask = mask;
+}
+
 static bool handle_mix_set(const std::string &key, const std::string &val) {
     if (key == "mix.enabled") {
-        g_shm->enabled = (val == "1" || val == "true") ? 1u : 0u;
+        /* Kept for backward-compat with older control-socket callers; no
+         * current GUI surfaces a separate voice on/off (the engine power
+         * switch already covers that) - 0 mutes both rings, 1 restores
+         * whichever destination was last selected. */
+        if (val == "1" || val == "true") apply_dest(g_dest_idx);
+        else { g_shm_in->enabled = 0u; g_shm_out->enabled = 0u; }
         return true;
     }
     if (key == "mix.gain") {
-        g_shm->gain = std::strtof(val.c_str(), nullptr) / 100.0f;
+        float g = std::strtof(val.c_str(), nullptr) / 100.0f;
+        g_shm_in->gain = g;
+        g_shm_out->gain = g;
         return true;
     }
-    if (key == "mix.channel") {
-        g_shm->channel_mask = (val == "L") ? AI_CHAN_L : (val == "R") ? AI_CHAN_R : AI_CHAN_LR;
+    if (key == "mix.dest_idx") {   /* shadow GUI: enum index */
+        int idx = std::atoi(val.c_str());
+        if (idx < 0 || idx > DEST_OUT34) return false;
+        apply_dest(idx);
         return true;
+    }
+    if (key == "mix.dest") {   /* web GUI: label */
+        for (int i = 0; i <= DEST_OUT34; i++) {
+            if (val == DEST_LABELS[i]) { apply_dest(i); return true; }
+        }
+        return false;
     }
     return false;
 }
 static bool handle_mix_get(const std::string &key, std::string &out) {
-    if (key == "mix.enabled") { out = g_shm->enabled ? "1" : "0"; return true; }
+    if (key == "mix.enabled") { out = (g_shm_in->enabled || g_shm_out->enabled) ? "1" : "0"; return true; }
     if (key == "mix.gain") {
-        char b[32]; std::snprintf(b, sizeof(b), "%.1f", g_shm->gain * 100.0f);
+        char b[32]; std::snprintf(b, sizeof(b), "%.1f", g_shm_in->gain * 100.0f);
         out = b; return true;
     }
-    if (key == "mix.channel") {
-        uint32_t m = g_shm->channel_mask;
-        out = (m == AI_CHAN_L) ? "L" : (m == AI_CHAN_R) ? "R" : "L+R";
-        return true;
-    }
+    if (key == "mix.dest_idx") { out = std::to_string(g_dest_idx); return true; }
+    if (key == "mix.dest") { out = DEST_LABELS[g_dest_idx]; return true; }
     return false;
 }
 
@@ -566,7 +624,7 @@ int main(int argc, char **argv) {
         "[jv880] up. port '%s:In (Mockba)'  ctrl socket %s  shm %s  ctrl ch %d\n"
         "[jv880] route a MIDI track to '%s:In (Mockba)' for notes and CC (Q-Link); audio\n"
         "[jv880] is mixed into the Force's capture input via ForceAudioIn (must be enabled).\n",
-        client.c_str(), g_ctrl_sock_path.c_str(), g_shm_name, g_ctrl_ch + 1, client.c_str());
+        client.c_str(), g_ctrl_sock_path.c_str(), g_shm_name_in, g_ctrl_ch + 1, client.c_str());
 
     std::thread timer(timer_loop);
     std::thread ctrl(ctrl_server_loop, lfd);
@@ -581,7 +639,8 @@ int main(int argc, char **argv) {
         g_api->destroy_instance(g_inst);
     }
     delete in;
-    if (g_shm) { munmap(g_shm, AI_SHM_BYTES); shm_unlink(g_shm_name); }
+    if (g_shm_in)  { munmap(g_shm_in, AI_SHM_BYTES); shm_unlink(g_shm_name_in); }
+    if (g_shm_out) { munmap(g_shm_out, AI_SHM_BYTES); shm_unlink(g_shm_name_out); }
     fprintf(stderr, "[jv880] bye\n");
     return 0;
 }

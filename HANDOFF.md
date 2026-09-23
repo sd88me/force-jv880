@@ -1,4 +1,18 @@
-# force-jv880 — v1.2
+# force-jv880 — v1.3
+
+## UPDATE 2026-09-23 (v1.3.0): multi-destination output, voice-on/off removed
+
+Output Mix's old L/R/L+R channel control is now a 6-way **destination**
+selector - IN1, IN2, IN1+IN2 (stereo into Audio-In 1/2), OUT3, OUT4,
+OUT3+OUT4 (stereo into Out 3/4), matching force-audiojack's out-bus
+injection (`forceAudioInject.h`'s `AI_SHM_NAME_FMT_OUT`). `jv_host` now
+opens both rings at startup and always renders into both; `mix.dest`/
+`mix.dest_idx` just flips which one is `enabled`, so switching destination
+never resumes from a stale ring backlog. The web GUI shows the full labels
+(`IN1`, `IN2`, `OUT3`, `OUT4`, `IN1,2`, `OUT3,4`); the shadow GUI's enum
+widget uses `I1`/`I2`/`O3`/`O4`/`I1+2`/`O3+4` since its options list is
+itself comma-delimited. Also: the separate "Voice Out" on/off toggle is
+gone from both GUIs - redundant with the engine power switch.
 
 ## UPDATE 2026-09-20 (v1.1.0): shadow-mode touchscreen GUI
 
