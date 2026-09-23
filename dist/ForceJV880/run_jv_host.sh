@@ -3,7 +3,7 @@
 # ForceJV880 — deliberately a no-op.
 #
 # This addon does not arm any LD_PRELOAD tap or auto-start jv_host at boot
-# - that's ForceAudioIn's job (see its own README.md), and jv_host is only
+# - that's ForceAudioJack's job (see its own README.md), and jv_host is only
 # ever started on demand via the nodeServer Modules page (/moduler), never
 # at boot. NSMODULE.json also sets AUTOLAUNCHABLE:false for this reason.
 #
