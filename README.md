@@ -141,13 +141,14 @@ scripts/deploy.sh user@force-ip
 
 This is equivalent to, and replaces, these manual steps:
 
-1. Copy `addon/` to `AddOns/ForceJV880/` on the Force.
+1. Assemble the folder with `scripts/package.sh --stage <dir>` (`addon/` +
+   `build/jv_host` + `web/`) and copy `<dir>/AddOns/ForceJV880/` to the Force.
 2. Run `AddOns/ForceJV880/manage.sh ENABLE`.
 3. Run `AddOns/ForceJV880/web/manage.sh ENABLE`.
 
 Your ROM files must already be in `addon/roms/` (and expansion files in
-`addon/roms/expansions/`) before running `deploy.sh` — it simply copies the
-whole `addon/` folder over, ROMs included.
+`addon/roms/expansions/`) before running `deploy.sh` — it copies them over
+with the rest of the folder. (Release zips never include ROMs.)
 
 You'll also need to enable the separate `force-audio-jack` addon once (its
 own `manage.sh ENABLE`) — this module's own `manage.sh ENABLE` does **not**

@@ -9,21 +9,21 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 APP_DIR="ForceJV880"   # device-side AddOns/<APP_DIR> folder name
-HAS_WEB=1               # 1 if addon/web/manage.sh exists and needs its own ENABLE
+HAS_WEB=1               # 1 if the web panel (web/manage.sh) needs its own ENABLE
 
 HOST="${1:?usage: scripts/deploy.sh user@force-ip}"
 
-if [ ! -d addon ]; then
-  echo "addon/ not found - run scripts/build.sh first." >&2
-  exit 1
-fi
+# addon/ alone has no engine binary or web/ - package.sh assembles the full
+# device folder (the same one the release zip ships, plus local files).
+STAGE="$(mktemp -d)"; trap 'rm -rf "$STAGE"' EXIT
+scripts/package.sh --stage "$STAGE"
 
 mmPath="$(ssh "$HOST" 'cat /dev/shm/.mmPath')"
 echo "== remote mmPath: $mmPath =="
 
 # scp -r into an existing destination NESTS rather than merges - remove first.
 ssh "$HOST" "rm -rf '$mmPath/AddOns/$APP_DIR'"
-scp -r addon "$HOST:$mmPath/AddOns/$APP_DIR"
+scp -r "$STAGE/AddOns/$APP_DIR" "$HOST:$mmPath/AddOns/$APP_DIR"
 
 ssh "$HOST" "'$mmPath/AddOns/$APP_DIR/manage.sh' ENABLE"
 if [ "$HAS_WEB" = 1 ]; then
@@ -40,7 +40,7 @@ addon (the shared audio-injection tap JV-880 depends on) - see
 Make sure your JV-880 ROM files (v1.0.0 only - jv880_rom1.bin, jv880_rom2.bin,
 jv880_waverom1.bin, jv880_waverom2.bin, optionally jv880_nvram.bin, plus any
 SR-JV80 expansion files under roms/expansions/) were already in addon/roms/
-before this script ran - it just copies addon/ as-is, ROMs included.
+before this script ran - they are copied over with the rest of the folder.
 
 Start jv_host itself from the nodeServer Modules page (/moduler) - it is
 never auto-launched at boot by design. Web panel: http://${HOST#*@}:8306
