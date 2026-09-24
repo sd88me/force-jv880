@@ -126,6 +126,15 @@ cards can be used at once:
 
 ## Installation
 
+**From a release (no build needed):** download `ForceJV880-<version>.zip`
+from the Releases page (under *Assets*, not the "Source code" archives) and
+unzip it onto the SD card root, overwriting the old files in
+`AddOns/ForceJV880` (your ROMs stay put). On a first install, copy your ROM files
+into `AddOns/ForceJV880/roms/`. Then run the `manage.sh ENABLE` steps (2 and 3)
+below on the device.
+
+**From a checkout:**
+
 ```
 scripts/deploy.sh user@force-ip
 ```
