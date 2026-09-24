@@ -1,0 +1,73 @@
+# Attach the SD-card zip (scripts/package.sh) to every GitHub release.
+#
+# Publishing a release (web UI, gh, or API) builds the zip from that tag and
+# uploads it as a release asset. The zip holds only AddOns/ - unzip it onto
+# the SD card root. GitHub still adds its own "Source code" archives to every
+# release; those can't be turned off. VST releases (tags containing "-vst-")
+# are skipped - they ship their own payload zip.
+#
+# To backfill or rebuild an existing release's zip: Actions -> Release zip ->
+# Run workflow, and enter the tag. The packaging script always comes from the
+# branch the workflow runs on, so this also works for tags older than it.
+name: Release zip
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to (re)build the zip for
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    if: ${{ !contains(github.event.release.tag_name || inputs.tag, '-vst-') }}
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out packaging scripts
+        uses: actions/checkout@v4
+        with:
+          path: tooling
+
+      - name: Check out the release tag
+        uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ env.TAG }}
+          path: src
+      - name: Build zip
+        run: PKG_ROOT="$PWD/src" tooling/scripts/package.sh "$TAG"
+
+      - name: Check zip holds only AddOns/ and 32-bit ARM binaries
+        run: |
+          python3 - src/dist-zip/*.zip <<'PY'
+          import os, subprocess, sys, tempfile, zipfile
+          bad = []
+          for path in sys.argv[1:]:
+              z = zipfile.ZipFile(path)
+              bad += [f"{n}: outside AddOns/" for n in z.namelist() if not n.startswith("AddOns/")]
+              elves = 0
+              with tempfile.TemporaryDirectory() as d:
+                  z.extractall(d)
+                  for n in z.namelist():
+                      p = os.path.join(d, n)
+                      if os.path.isfile(p) and open(p, "rb").read(4) == b"\x7fELF":
+                          elves += 1
+                          desc = subprocess.run(["file", "-b", p], capture_output=True, text=True).stdout
+                          if "ELF 32-bit LSB" not in desc or "ARM" not in desc:
+                              bad.append(f"{n}: not a 32-bit ARM binary ({desc.strip()})")
+              if not elves:
+                  bad.append(f"{path}: no binaries at all")
+          for b in bad:
+              print(f"::error::{b}")
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Upload to release
+        run: gh release upload "$TAG" src/dist-zip/*.zip --clobber --repo "$GITHUB_REPOSITORY"
