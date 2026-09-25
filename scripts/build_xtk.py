@@ -51,12 +51,43 @@ Usage:
 import argparse
 import gzip
 import json
+import re
 import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SEED_PATH = HERE / "xtk-seed.json"
+HOST_PARAMS_PATH = HERE.parent / "src" / "jv_host.cpp"
 HEADER = "ACVS\n3.3.0.0\nSerialisableTrackData\njson\nLinux\n"
+
+PARAMS_LINE_RE = re.compile(r'\{\s*"(\w+)"\s*,.*,\s*(-?\d+)\s*\}')
+
+
+def parse_host_params(host_path):
+    """Parse (key, cc) pairs straight out of the host's own PARAMS[] table
+    -- so the mapping table below can never silently drift from what the
+    host actually listens for, the same principle as KNOBS but for every CC
+    the host has, not just the 16 that fit on the Q-Link bank. Returns
+    [(key, cc), ...] in table order.
+    """
+    text = Path(host_path).read_text()
+    m = re.search(r"static const ParamSpec PARAMS\[\]\s*=\s*\{(.*?)\n\};", text, re.DOTALL)
+    if not m:
+        sys.exit(f"couldn't find PARAMS[] table in {host_path}")
+    entries = []
+    for line in m.group(1).splitlines():
+        em = PARAMS_LINE_RE.match(line.strip())
+        if em:
+            entries.append((em.group(1), int(em.group(2))))
+    return entries
+
+
+def label_from_key(key):
+    """Auto-derived display label for CCs outside the curated KNOBS list --
+    everything the web GUI exposes that the 16-knob Q-Link bank has no room
+    for. Deliberately not hand-maintained (unlike KNOBS's labels), so it
+    can't drift from the host's own key names either."""
+    return key.upper().replace("_", " ")
 
 # Sentinel automationIndex the file's own schema already uses for "this slot
 # has no automation target" -- see LEFTOVER-DATA FIX above.
@@ -67,6 +98,33 @@ UNUSED_AUTOMATION_INDEX = 2147483647
 # every build so a future seed swap/re-capture can't silently reintroduce
 # this same leak.
 FORBIDDEN_SUBSTRINGS = ["RiffMaker", "Harpie"]
+
+
+def display_order(items):
+    """Force lays a Q-Link bank's 16 slots into an on-screen 4x4 grid
+    bottom-up: array index 0 renders bottom-left, index 15 top-right
+    (confirmed on real hardware -- both the Q-Link assign editor and the
+    track overview page agree on this). To make the grid read top-to-bottom
+    in the same order KNOBS lists them, reverse the array in blocks of 4
+    (one block per display row); columns within a row keep their order.
+    With fewer than 16 items (this addon has 14), the two unused slots
+    land at the end of the top row rather than at the very end of the
+    array -- not separately hardware-confirmed, but the direct
+    extrapolation of the confirmed 16-item rule.
+
+    Side effect, unavoidable: this also changes which physical Q-Link knob
+    number is bound to which parameter (whatever ends up at array index 0
+    becomes hardware Q-Link knob 1), since screen position and array index
+    are the same thing on this device. There's no way to change the visual
+    order without also changing that binding.
+    """
+    cols = 4
+    rows = 4  # a Q-Link bank is always 16 physical slots / 4 rows
+    slots = [None] * (rows * cols)
+    for d, item in enumerate(items):
+        row, col = divmod(d, cols)
+        slots[(rows - 1 - row) * cols + col] = item
+    return [x for x in slots if x is not None]
 
 # (key, label, cc) - must match src/jv_host.cpp's PARAMS[] table exactly
 # (key names, CC numbers) or the knob will move but nothing will happen on
@@ -116,17 +174,53 @@ def make_qlink(label, cc, track_name):
 
 
 def blank_mapping(doc):
-    """Zero out data.program.customisable.mapping -- see LEFTOVER-DATA FIX.
+    """Rebuild data.program.customisable.mapping from KNOBS -- see
+    LEFTOVER-DATA FIX.
 
-    Leaves parameterIndex (positional/structural) alone; resets
-    automationIndex/value/name to the file's own "unused slot" shape so no
-    donor-addon parameter names survive.
+    REAL-HARDWARE FINDING: this table, not customQLinks, is what the
+    Force's on-screen custom-knob page actually renders. automationIndex is
+    a MIDI CC number (the donor addon's own real CC scheme), and `name` is
+    that CC's display label. Confirmed by comparing a live screenshot of an
+    unmodified donor track (correct custom names) against ours (showing
+    "CC 24", "CC 29" etc. with the donor's own leftover *values*) -- Force
+    falls back to a built-in MIDI-standard name (CC 11 = "Expression") or a
+    bare "CC <n>" label whenever `name` is empty, which is what merely
+    blanking `name` on every entry produced. See force-acid's build_xtk.py
+    for the full writeup.
+
+    The only correct fix is to actually populate this table with our own CC
+    numbers and labels, and blank every other slot to the file's own
+    "unused slot" shape (automationIndex sentinel, name/value empty) so no
+    donor CCs or names survive either.
+
+    COVERAGE: this table has 127 slots and isn't limited to one Q-Link
+    bank's 16 knobs the way customQLinks is -- the web GUI exposes every CC
+    the host listens to, so this on-screen page should too. The first 16
+    slots get the Q-Link-covered CCs in KNOBS, reordered for correct
+    top-to-bottom reading on page 1 (hardware-confirmed -- see
+    display_order()); every other CC the host has (parsed straight out of
+    its own PARAMS[] table via parse_host_params(), never hand-copied, so
+    it can't drift) fills the remaining slots after that, in the host's own
+    table order. Whether the same bottom-up-per-page quirk applies to pages
+    beyond the first isn't hardware-confirmed -- if page 2+ reads bottom-up
+    on a real screen too, apply display_order() to chunks of those as well.
     """
     mapping = doc["data"]["program"]["customisable"]["mapping"]
     for entry in mapping:
         entry["automationIndex"] = UNUSED_AUTOMATION_INDEX
         entry["value"] = 0.0
         entry["name"] = ""
+    for slot, (_key, label, cc) in zip(mapping, display_order(KNOBS)):
+        slot["automationIndex"] = cc
+        slot["name"] = label
+        slot["value"] = 0.0
+
+    knob_ccs = {k[2] for k in KNOBS}
+    extra = [(key, cc) for key, cc in parse_host_params(HOST_PARAMS_PATH) if cc not in knob_ccs]
+    for slot, (key, cc) in zip(mapping[len(KNOBS):], extra):
+        slot["automationIndex"] = cc
+        slot["name"] = label_from_key(key)
+        slot["value"] = 0.0
 
 
 def fix_midi_routes(doc, control_channel):
@@ -241,7 +335,14 @@ def main():
                           'src/jv_host.cpp\'s --control-channel must match that track\'s output '
                           'MIDI channel (default: "JV880 CTRL")')
     ap.add_argument("--out", default=str(HERE.parent / "addon" / "Force JV880 Control.xtk"))
-    ap.add_argument("--template-name", default="Force JV880 Control")
+    ap.add_argument("--template-name", default=None,
+                     help="self-referential name Force gives the NEW track it creates when "
+                          "loading this .xtk (Force's track-template loader always creates a "
+                          "new track, never merges onto one you already have) -- defaults to "
+                          "--track-name so the created track is already correctly named and "
+                          "self-targets without a manual rename step; override only if you "
+                          "want the loaded track to have a different display name than the "
+                          "Q-Link targets bind to")
     ap.add_argument("--control-channel", type=int, default=1,
                      help="1-16, must match jv_host's --control-channel (default 1) -- "
                           "used for this track's MIDI I/O route, not the Q-Link CC targets")
@@ -261,7 +362,8 @@ def main():
         doc = json.loads(pack_path.read_text())
         print(f"packing {pack_path} (skipping seed/KNOBS generation)")
     else:
-        doc = build_doc(args.track_name, args.template_name, args.control_channel)
+        template_name = args.template_name or args.track_name
+        doc = build_doc(args.track_name, template_name, args.control_channel)
 
     hits = audit(doc)
     if hits:

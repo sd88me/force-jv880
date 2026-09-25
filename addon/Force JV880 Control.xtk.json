@@ -1,7 +1,7 @@
 {
   "data": {
     "version": 3,
-    "name": "Force JV880 Control",
+    "name": "JV880 CTRL",
     "volume": 0.921875,
     "volumeKnown": true,
     "pan": 0.4921875,
@@ -20,7 +20,7 @@
     "samples": [],
     "program": {
       "version": 1,
-      "name": "Force JV880 Control",
+      "name": "JV880 CTRL",
       "type": 4,
       "programPads": {
         "Universal": {
@@ -674,87 +674,87 @@
         "mapping": [
           {
             "parameterIndex": "0 0 0",
-            "automationIndex": 2147483647,
+            "automationIndex": 32,
             "value": 0.0,
-            "name": ""
+            "name": "REVERB"
           },
           {
             "parameterIndex": "0 0 1",
-            "automationIndex": 2147483647,
+            "automationIndex": 33,
             "value": 0.0,
-            "name": ""
+            "name": "CHORUS"
           },
           {
             "parameterIndex": "0 0 2",
-            "automationIndex": 2147483647,
+            "automationIndex": 28,
             "value": 0.0,
-            "name": ""
+            "name": "SUSTAIN"
           },
           {
             "parameterIndex": "0 0 3",
-            "automationIndex": 2147483647,
+            "automationIndex": 29,
             "value": 0.0,
-            "name": ""
+            "name": "RELEASE"
           },
           {
             "parameterIndex": "0 0 4",
-            "automationIndex": 2147483647,
+            "automationIndex": 30,
             "value": 0.0,
-            "name": ""
+            "name": "TVF ENV"
           },
           {
             "parameterIndex": "0 0 5",
-            "automationIndex": 2147483647,
+            "automationIndex": 31,
             "value": 0.0,
-            "name": ""
+            "name": "LFO DEPTH"
           },
           {
             "parameterIndex": "0 0 6",
-            "automationIndex": 2147483647,
+            "automationIndex": 24,
             "value": 0.0,
-            "name": ""
+            "name": "CUTOFF"
           },
           {
             "parameterIndex": "0 0 7",
-            "automationIndex": 2147483647,
+            "automationIndex": 25,
             "value": 0.0,
-            "name": ""
+            "name": "RESONANCE"
           },
           {
             "parameterIndex": "0 0 8",
-            "automationIndex": 2147483647,
+            "automationIndex": 26,
             "value": 0.0,
-            "name": ""
+            "name": "ATTACK"
           },
           {
             "parameterIndex": "0 0 9",
-            "automationIndex": 2147483647,
+            "automationIndex": 27,
             "value": 0.0,
-            "name": ""
+            "name": "DECAY"
           },
           {
             "parameterIndex": "0 0 10",
-            "automationIndex": 2147483647,
+            "automationIndex": 20,
             "value": 0.0,
-            "name": ""
+            "name": "MODE"
           },
           {
             "parameterIndex": "0 0 11",
-            "automationIndex": 2147483647,
+            "automationIndex": 21,
             "value": 0.0,
-            "name": ""
+            "name": "PRESET"
           },
           {
             "parameterIndex": "0 0 12",
-            "automationIndex": 2147483647,
+            "automationIndex": 22,
             "value": 0.0,
-            "name": ""
+            "name": "PERF"
           },
           {
             "parameterIndex": "0 0 13",
-            "automationIndex": 2147483647,
+            "automationIndex": 23,
             "value": 0.0,
-            "name": ""
+            "name": "OCTAVE"
           },
           {
             "parameterIndex": "0 0 14",
@@ -1586,7 +1586,7 @@
           "loop": false,
           "legato": true,
           "launch": 0,
-          "name": "Force JV880 Control",
+          "name": "JV880 CTRL",
           "colour": 0,
           "eventList": {
             "length": 9223372036854775807,
@@ -1615,7 +1615,7 @@
           "loop": true,
           "legato": false,
           "launch": 0,
-          "name": "Force JV880 Control 1",
+          "name": "JV880 CTRL 1",
           "colour": 0,
           "eventList": {
             "length": 9223372036854775807,
